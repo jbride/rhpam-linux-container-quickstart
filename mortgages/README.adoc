@@ -1,0 +1,9 @@
+== Procedure
+
+. Change directory into this project
+
+. Build and install the project:
++
+-----
+$ mvn clean install
+-----

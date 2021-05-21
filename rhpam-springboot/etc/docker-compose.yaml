@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+
+  psql_rhpam:
+    image: registry.redhat.io/rhel8/postgresql-12
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      PGPORT: 5432
+      POSTGRESQL_USER: rhpam
+      POSTGRESQL_PASSWORD: rhpam
+      POSTGRESQL_DATABASE: rhpam
+      POSTGRESQL_MAX_PREPARED_TRANSACTIONS: 10
+      SCRIPT_DIR: /opt/sql
+    volumes:
+      - type: bind
+        source: ./rhpam/rhpam-psql.conf
+        target: /opt/app-root/src/postgresql-cfg/rhpam-psql.conf
+      - type: bind
+        source: ./rhpam/ddl-scripts/postgresql/
+        target: /opt/sql
+      - type: bind
+        source: ./rhpam/create_rhpam_database.sh
+        target: /opt/app-root/src/postgresql-start/create_rhpam_database.sh
+
+  rhpam_springboot:
+    image: quay.io/redhat_naps_da/rhpam-sprintboot:0.0.1
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      JAVA_MAX_MEM_RATIO: '60'
+      JAVA_INITIAL_MEM_RATIO: '0'
+      GC_MAX_METASPACE_SIZE: '500'
+      SPRING_CONFIG_LOCATION: "file:///deployments/config/application.properties"
+
+      # org.kie.server.repo: dictates to kie-server where to find its KIE container configuration file
+      # kie.maven.settings.custom: dictates to kie-server where to fine its artifact repo of KJars
+      JAVA_OPTS_APPEND: '-Dorg.kie.server.repo=/deployments/config -Dkie.maven.settings.custom=/m2/settings.xml'
+
+      MAVEN_MIRROR_URL: ''
+    volumes:
+      - type: bind
+        source: ./rhpam/runtime_configs
+        target: /deployments/config/
+    depends_on:
+      - psql_rhpam

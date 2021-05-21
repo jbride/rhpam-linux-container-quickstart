@@ -1,0 +1,19 @@
+== Purpose
+
+Demonstrate execution of business processes and rules in a containerized RH-PAM KieServer environment.
+
+== Overview
+There are two sub-projects included.  
+Read the docs and execute each of them in the following order:
+
+. *mortgages*
++
+Simple KJar example with business rules.
+Plagarized from:  https://github.com/kiegroup/kie-wb-playground/tree/master/mortgages
+
+. *rhpam-springboot*
++
+This project provides a RH-PAM KieServer embedded in SpringBoot.
+It includes a pre-configured _KIE Container_ that manages the _mortgages_ KIE jar.
++
+The resultant _Kie Container_  is then packaged into an immutable Linux container.

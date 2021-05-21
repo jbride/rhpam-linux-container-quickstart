@@ -1,0 +1,141 @@
+== Purpose
+
+This project rovides a RH-PAM KieServer embedded in SpringBoot.
+It includes a pre-configured _KIE Container_ that manages the _mortgages_ KIE jar.
+
+The resultant _Kie Container_  is then packaged into an immutable Linux container.
+
+== Build
+
+NOTE: The following commands make use of _podman_, _buildah_ and _podman_compose_.  The equivalent _docker_ family of utilities should also work.
+
+. Build KIE-Server executable : 
++
+-----
+$ mvn clean package
+-----
+
+. Build linux container with KIE-Server:
++
+-----
+$ buildah bud -f docker/rhpam-springboot/Dockerfile \
+              -t quay.io/redhat_naps_da/rhpam-sprintboot:0.0.1 \
+              .
+-----
+
+. Start pod with _postgresql_ and _rhpam-springboot_ linux containers:
++
+-----
+$ podman-compose -f etc/docker-compose.yaml up -d
+-----
+
+
+== Test
+
+
+. Health Check Report
+
+   `````
+   $ curl -u "kieserver:kieserver" -H 'Accept:application/json' localhost:8080/rest/server/healthcheck?report=true
+   `````
+
+. View swagger
+   `````
+   $ curl -v -u "kieserver:kieserver" localhost:8080/rest/swagger.json | jq .
+   `````
+
+. List KIE Containers
+   `````
+   $ curl -u "kieserver:kieserver" -X GET http://localhost:8080/rest/server/containers
+   `````
+
+
+. Test Drools API
+
+.. Create a request payload that will be used when firing rules of the Mortgage sample application:
++
+-----
+$ echo '
+{
+  "commands": [
+      { "insert": {
+        "object": {
+          "mortgages.mortgages.Applicant": {
+            "name": "sarah",
+            "age": 25,
+            "creditRating": 650
+          }
+        },
+        "out-identifier": "applicant_sarah",
+        "return-object": true
+      }},
+      { "insert": {
+        "object": {
+          "mortgages.mortgages.LoanApplication": {
+            "amount": 2500
+          }
+        },
+        "out-identifier": "loanapp",
+        "return-object": true
+      }},
+      { "insert": {
+        "object": {
+          "mortgages.mortgages.IncomeSource": {
+            "amount": "50"
+          }
+        },
+        "out-identifier": "incomesource",
+        "return-object": true
+      }},
+      { "insert": {
+        "object": {
+          "mortgages.mortgages.Bankruptcy": {
+            "yearOfOccurence": "1991",
+            "amountOwed": "11000"
+          }
+        },
+        "out-identifier": "bankruptcy",
+        "return-object": true
+      }},
+    {
+      "fire-all-rules": {
+        "max": 10,
+        "out-identifier": "firedActivations"
+      }
+    }
+  ]
+}
+
+' > /tmp/mortgage_rules_execution.json
+-----
+
+.. Invoke kie-server with payload to insert facts and fire all rules of the Mortgage application:
++
+-----
+curl -v \
+    -H  "accept: application/json" \
+    -H  "content-type: application/json" \
+    -X POST http://localhost:8080/rest/server/containers/instances/mortgages-0.0.1 \
+    -d @/tmp/mortgage_rules_execution.json
+-----
+
+.
+
+The response should include a JSON element that indicates that the loan application has been declined due to a prior bankruptcy:
+-----
+{
+  "type" : "SUCCESS",
+  "msg" : "Container mortgages_1.0.0 successfully called.",
+  "result" : {
+    "execution-results" : {
+      "results" : [ {
+        "value" : {"mortgages.mortgages.LoanApplication":{
+  "amount" : 2500,
+  "approved" : false,
+  "approvedRate" : null,
+  "deposit" : null,
+  "explanation" : "has been bankrupt",
+  "insuranceCost" : null,
+  "lengthYears" : null
+}}
+-----

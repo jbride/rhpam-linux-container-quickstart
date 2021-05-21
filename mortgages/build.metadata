@@ -1,0 +1,12 @@
+# Created by buildmetadata-maven-plugin 1.7.0 ( SHA: 6f444cae ) 
+build.maven.version=3.6.3
+build.version=7.48.0.Final-redhat-00006
+build.java.vm=OpenJDK 64-Bit Server VM
+build.version.full=7.48.0.Final-redhat-00006
+build.java.compiler=HotSpot 64-Bit Tiered Compilers
+build.maven.execution.cmdline=clean package -DskipTests
+build.groupId=org.kie.workbench.playground
+build.java.vendor=Red Hat, Inc.
+build.java.runtime.name=OpenJDK Runtime Environment
+build.java.runtime.version=11.0.11+9
+build.artifactId=mortgages

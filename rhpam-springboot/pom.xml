@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.company</groupId>
+  <artifactId>rhpam-springboot</artifactId>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
+  <name>rhpam-springboot</name>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.2.2.RELEASE</version>
+  </parent>
+
+  <properties>
+    <version.org.kie>7.48.0.Final-redhat-00006</version.org.kie>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <narayana.version>5.9.0.Final</narayana.version>
+    <fabric8.version>3.5.40</fabric8.version>
+    <cxf.version>3.2.14</cxf.version>
+    <version.mortgages.kjar>0.0.1</version.mortgages.kjar>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>com.redhat.naps</groupId>
+      <artifactId>mortgages</artifactId>
+      <version>${version.mortgages.kjar}</version>
+    </dependency>
+
+    
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-server-spring-boot-starter-jbpm</artifactId>
+      <version>${version.org.kie}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>jbpm-spring-boot-data-sources</artifactId>
+      <version>${version.org.kie}</version>
+    </dependency>
+
+    <!-- database persistence -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+    </dependency>
+
+
+    <!-- swagger -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-rs-service-description-swagger</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        
+      </plugin>
+
+      <!-- Purpose of this plugin is to make KJars available in maven repo of linux container.
+           In particular, it'll copy these KJars to target/repository during maven build.
+           Afterwards, when creating linux container, these KJars are added to /m2/repository
+           At runtime, KJars are made available via:  JAVA_OPTS_APPEND='kie.maven.settings.custom=/m2/settings.xml'
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <artifactItems>
+            <artifactItem>
+              <groupId>com.redhat.naps</groupId>
+              <artifactId>mortgages</artifactId>
+              <version>${version.mortgages.kjar}</version>
+              <type>jar</type>
+              <outputDirectory>${project.build.directory}/repository/com/redhat/naps/mortgages/${version.mortgages.kjar}</outputDirectory>
+            </artifactItem>
+          </artifactItems>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <repositories>    
+    <repository>
+      <id>jboss-public-repository-group</id>
+      <name>Red Hat Maven Repository Group</name>
+      <url>https://maven.repository.redhat.com/ga</url>
+      <layout>default</layout>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <updatePolicy>daily</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+</project>
