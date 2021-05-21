@@ -119,9 +119,8 @@ curl -v \
     -d @/tmp/mortgage_rules_execution.json
 -----
 
-.
-
-The response should include a JSON element that indicates that the loan application has been declined due to a prior bankruptcy:
+. The response should include a JSON element that indicates that the loan application has been declined due to a prior bankruptcy:
++
 -----
 {
   "type" : "SUCCESS",
