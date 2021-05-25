@@ -29,25 +29,26 @@ $ buildah bud -f docker/rhpam-springboot/Dockerfile \
 $ podman-compose -f etc/docker-compose.yaml up -d
 -----
 
-
 == Test
 
 
 . Health Check Report
-
-   `````
-   $ curl -u "kieserver:kieserver" -H 'Accept:application/json' localhost:8080/rest/server/healthcheck?report=true
-   `````
++
+-----
+$ curl -u "kieserver:kieserver" -H 'Accept:application/json' localhost:8080/rest/server/healthcheck?report=true
+-----
 
 . View swagger
-   `````
-   $ curl -v -u "kieserver:kieserver" localhost:8080/rest/swagger.json | jq .
-   `````
++
+-----
+$ curl -v -u "kieserver:kieserver" localhost:8080/rest/swagger.json | jq .
+-----
 
 . List KIE Containers
-   `````
-   $ curl -u "kieserver:kieserver" -X GET http://localhost:8080/rest/server/containers
-   `````
++
+-----
+$ curl -u "kieserver:kieserver" -X GET http://localhost:8080/rest/server/containers
+-----
 
 
 . Test Drools API
@@ -119,7 +120,7 @@ curl -v \
     -d @/tmp/mortgage_rules_execution.json
 -----
 
-. The response should include a JSON element that indicates that the loan application has been declined due to a prior bankruptcy:
+.. The response should include a JSON element that indicates that the loan application has been declined due to a prior bankruptcy:
 +
 -----
 {

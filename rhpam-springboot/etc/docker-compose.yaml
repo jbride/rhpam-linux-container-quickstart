@@ -40,6 +40,7 @@ services:
       # kie.maven.settings.custom: dictates to kie-server where to fine its artifact repo of KJars
       JAVA_OPTS_APPEND: '-Dorg.kie.server.repo=/deployments/config -Dkie.maven.settings.custom=/m2/settings.xml'
 
+      # Optional: Change to URL of Nexus (if in use)
       MAVEN_MIRROR_URL: ''
     volumes:
       - type: bind

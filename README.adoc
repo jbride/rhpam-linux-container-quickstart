@@ -2,6 +2,21 @@
 
 Demonstrate execution of business processes and rules in a containerized RH-PAM KieServer environment.
 
+== Design criteria:
+
+. Lightweight kie-server runtime based on Red Hat supported Spring Boot
+. Kie-server enabled (and exposes RESTful APIs) for both business rules and business processes
+. Kie-server API is documented via swagger
+. Kie-server is built as a linux container image and is immutable
++
+Changes / updates to the linux container are done through a Dockerfile and conventional tooling such as docker or podman.
+
+. Kie-server is "unmanaged"
++
+Deployments of _kie-containers_ to the Kie-server are not done via a _kie-controller_ (ie:  Business Central or Business Central Monitoring)
++
+Instead, the _kie-container_ jar file is built into the linux container image and referenced in an XML based _kie-controller_ configuration file (also baked into the linux container image)
+
 == Overview
 There are two sub-projects included.  
 Read the docs and execute each of them in the following order:
@@ -17,3 +32,19 @@ This project provides a RH-PAM KieServer embedded in SpringBoot.
 It includes a pre-configured _KIE Container_ that manages the _mortgages_ KIE jar.
 +
 The resultant _Kie Container_  is then packaged into an immutable Linux container.
+
+== Reference
+
+. link:https://github.com/kiegroup/jbpm/tree/7.48.0.Final/jbpm-db-scripts/src/main/resources/db/ddl-scripts/postgresql[RH-PAM / PostgreSQL Schemas]
++
+The sql files contained in this project where copied from this git repository.
+
+. link:https://github.com/jboss-container-images/rhpam-7-openshift-image/tree/master/templates[OpenShift templates for traditional Business Central and KIE-Server]
++
+Traditional Business Central and KIE-Server run on JBoss EAP 7.
++
+These OpenShift templates are used when deploying traditional KIE-Server and Business Central to OpenShift.
++
+These templates reference RH-PAM images found in registry.redhat.io.
++
+For the purpose of this project, these templates nor RH-PAM container images are not used.
