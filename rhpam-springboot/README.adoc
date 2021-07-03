@@ -19,7 +19,7 @@ $ mvn clean package
 +
 -----
 $ buildah bud -f docker/rhpam-springboot/Dockerfile \
-              -t quay.io/redhat_naps_da/rhpam-sprintboot:0.0.1 \
+              -t quay.io/redhat_naps_da/rhpam-sprintboot:0.0.2 
               .
 -----
 
@@ -48,6 +48,18 @@ $ curl -v -u "kieserver:kieserver" localhost:8080/rest/swagger.json | jq .
 +
 -----
 $ curl -u "kieserver:kieserver" -X GET http://localhost:8080/rest/server/containers
+-----
+
+. List process definitions in JSON representation:
++
+-----
+$ curl -u "kieserver:kieserver" -X GET -H 'Accept:application/json' localhost:8080/rest/server/containers/handling-wih-exception/processes/
+-----
+
+. Start a business process
++
+-----
+$ curl -v -X POST -H 'Content-type:application/json' localhost:8080/rest/server/containers/handling-wih-exception/processes/handling-wih-exception.MainProcess/instances
 -----
 
 

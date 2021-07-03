@@ -37,5 +37,17 @@
       <messages/>
       <containerAlias>mortgages</containerAlias>
     </container>
+    <container>
+      <containerId>handling-wih-exception-0.0.1</containerId>
+      <releaseId>
+        <groupId>com.redhat.naps</groupId>
+        <artifactId>handling-wih-exception</artifactId>
+        <version>0.0.1</version>
+      </releaseId>
+      <status>STARTED</status>
+      <configItems/>
+      <messages/>
+      <containerAlias>handling-wih-exception</containerAlias>
+    </container>
   </containers>
 </kie-server-state>

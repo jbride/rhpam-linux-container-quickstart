@@ -23,6 +23,7 @@
     <fabric8.version>3.5.40</fabric8.version>
     <cxf.version>3.2.14</cxf.version>
     <version.mortgages.kjar>0.0.1</version.mortgages.kjar>
+    <version.handling-wih-exception.kjar>0.0.1</version.handling-wih-exception.kjar>
   </properties>
 
   <dependencies>
@@ -31,6 +32,11 @@
       <groupId>com.redhat.naps</groupId>
       <artifactId>mortgages</artifactId>
       <version>${version.mortgages.kjar}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.redhat.naps</groupId>
+      <artifactId>handling-wih-exception</artifactId>
+      <version>${version.handling-wih-exception.kjar}</version>
     </dependency>
 
     
@@ -101,6 +107,27 @@
               <version>${version.mortgages.kjar}</version>
               <type>jar</type>
               <outputDirectory>${project.build.directory}/repository/com/redhat/naps/mortgages/${version.mortgages.kjar}</outputDirectory>
+            </artifactItem>
+            <artifactItem>
+              <groupId>com.redhat.naps</groupId>
+              <artifactId>mortgages</artifactId>
+              <version>${version.mortgages.kjar}</version>
+              <type>pom</type>
+              <outputDirectory>${project.build.directory}/repository/com/redhat/naps/mortgages/${version.mortgages.kjar}</outputDirectory>
+            </artifactItem>
+            <artifactItem>
+              <groupId>com.redhat.naps</groupId>
+              <artifactId>handling-wih-exception</artifactId>
+              <version>${version.handling-wih-exception.kjar}</version>
+              <type>jar</type>
+              <outputDirectory>${project.build.directory}/repository/com/redhat/naps/handling-wih-exception/${version.handling-wih-exception.kjar}</outputDirectory>
+            </artifactItem>
+            <artifactItem>
+              <groupId>com.redhat.naps</groupId>
+              <artifactId>handling-wih-exception</artifactId>
+              <version>${version.handling-wih-exception.kjar}</version>
+              <type>pom</type>
+              <outputDirectory>${project.build.directory}/repository/com/redhat/naps/handling-wih-exception/${version.handling-wih-exception.kjar}</outputDirectory>
             </artifactItem>
           </artifactItems>
         </configuration>

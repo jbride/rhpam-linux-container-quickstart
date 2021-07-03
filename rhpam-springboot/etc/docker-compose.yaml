@@ -45,7 +45,7 @@ services:
       - psql_rhpam
 
   rhpam_springboot:
-    image: quay.io/redhat_naps_da/rhpam-sprintboot:0.0.1
+    image: quay.io/redhat_naps_da/rhpam-sprintboot:0.0.2
     restart: always
     ports:
       - "8080:8080"
