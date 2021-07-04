@@ -1,0 +1,62 @@
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" id="_95OTML7WEDm9R6kofgyatA" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd http://www.omg.org/spec/DD/20100524/DC DC.xsd http://www.omg.org/spec/DD/20100524/DI DI.xsd " exporter="jBPM Process Modeler" exporterVersion="2.0" targetNamespace="http://www.omg.org/bpmn20">
+  <bpmn2:itemDefinition id="_DeploymentIdItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_ProcessInstanceIdItem" structureRef="java.lang.Long"/>
+  <bpmn2:itemDefinition id="_WorkItemIdItem" structureRef="java.lang.Long"/>
+  <bpmn2:itemDefinition id="_ErrorMessageItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_ErrorItem" structureRef="java.lang.Exception"/>
+  <bpmn2:itemDefinition id="_NodeInstanceIdItem" structureRef="java.lang.Long"/>
+  <bpmn2:itemDefinition id="_outputItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_codeItem" structureRef="Integer"/>
+  <bpmn2:process id="DealWithExceptionViaTimer" drools:packageName="com.myspace.handling_wih_exception" drools:version="1.0" drools:adHoc="false" name="DealWithExceptionViaTimer" isExecutable="true" processType="Public">
+    <bpmn2:property id="DeploymentId" itemSubjectRef="_DeploymentIdItem" name="DeploymentId"/>
+    <bpmn2:property id="ProcessInstanceId" itemSubjectRef="_ProcessInstanceIdItem" name="ProcessInstanceId"/>
+    <bpmn2:property id="WorkItemId" itemSubjectRef="_WorkItemIdItem" name="WorkItemId"/>
+    <bpmn2:property id="ErrorMessage" itemSubjectRef="_ErrorMessageItem" name="ErrorMessage"/>
+    <bpmn2:property id="Error" itemSubjectRef="_ErrorItem" name="Error"/>
+    <bpmn2:property id="NodeInstanceId" itemSubjectRef="_NodeInstanceIdItem" name="NodeInstanceId"/>
+    <bpmn2:property id="output" itemSubjectRef="_outputItem" name="output"/>
+    <bpmn2:property id="code" itemSubjectRef="_codeItem" name="code"/>
+    <bpmn2:sequenceFlow id="_B0F10B80-D6EE-4678-8234-8063233A5986" sourceRef="_7335691F-AD98-4C14-A929-2A382D41CD67" targetRef="_1853C90A-ABBC-4686-A8B3-F52815C20AD6"/>
+    <bpmn2:endEvent id="_1853C90A-ABBC-4686-A8B3-F52815C20AD6">
+      <bpmn2:incoming>_B0F10B80-D6EE-4678-8234-8063233A5986</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:startEvent id="_7335691F-AD98-4C14-A929-2A382D41CD67">
+      <bpmn2:outgoing>_B0F10B80-D6EE-4678-8234-8063233A5986</bpmn2:outgoing>
+      <bpmn2:timerEventDefinition>
+        <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression">PT5S</bpmn2:timeDuration>
+      </bpmn2:timerEventDefinition>
+    </bpmn2:startEvent>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="DealWithExceptionViaTimer">
+      <bpmndi:BPMNShape id="shape__7335691F-AD98-4C14-A929-2A382D41CD67" bpmnElement="_7335691F-AD98-4C14-A929-2A382D41CD67">
+        <dc:Bounds height="56" width="56" x="100" y="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape__1853C90A-ABBC-4686-A8B3-F52815C20AD6" bpmnElement="_1853C90A-ABBC-4686-A8B3-F52815C20AD6">
+        <dc:Bounds height="56" width="56" x="266" y="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge_shape__7335691F-AD98-4C14-A929-2A382D41CD67_to_shape__1853C90A-ABBC-4686-A8B3-F52815C20AD6" bpmnElement="_B0F10B80-D6EE-4678-8234-8063233A5986">
+        <di:waypoint x="128" y="128"/>
+        <di:waypoint x="266" y="128"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmn2:relationship type="BPSimData">
+    <bpmn2:extensionElements>
+      <bpsim:BPSimData>
+        <bpsim:Scenario id="default" name="Simulationscenario">
+          <bpsim:ScenarioParameters/>
+          <bpsim:ElementParameters elementRef="_7335691F-AD98-4C14-A929-2A382D41CD67">
+            <bpsim:TimeParameters>
+              <bpsim:ProcessingTime>
+                <bpsim:NormalDistribution mean="0" standardDeviation="0"/>
+              </bpsim:ProcessingTime>
+            </bpsim:TimeParameters>
+          </bpsim:ElementParameters>
+        </bpsim:Scenario>
+      </bpsim:BPSimData>
+    </bpmn2:extensionElements>
+    <bpmn2:source>_95OTML7WEDm9R6kofgyatA</bpmn2:source>
+    <bpmn2:target>_95OTML7WEDm9R6kofgyatA</bpmn2:target>
+  </bpmn2:relationship>
+</bpmn2:definitions>
