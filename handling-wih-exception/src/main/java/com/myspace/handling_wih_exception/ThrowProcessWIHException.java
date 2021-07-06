@@ -8,9 +8,12 @@ import org.kie.api.runtime.process.WorkItemManager;
 
 
 public class ThrowProcessWIHException implements WorkItemHandler {
+
+    private static final String COUNTER = "COUNTER";
     
     private String processId;
     private HandlingStrategy strategy;
+    private int retries;
     
     public ThrowProcessWIHException(String processId, HandlingStrategy strategy) {
         super();
@@ -24,16 +27,45 @@ public class ThrowProcessWIHException implements WorkItemHandler {
         this.strategy = HandlingStrategy.valueOf(strategy);
     }
 
+    public ThrowProcessWIHException(String processId, String strategy, int retries) {
+        super();
+        this.processId = processId;
+        this.strategy = HandlingStrategy.valueOf(strategy);
+        this.retries = retries;
+    }
+
     @Override
-    public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
+    public void executeWorkItem(WorkItem workItem, WorkItemManager manager){
         
         if (processId != null && strategy != null) {
-    
-            System.out.println("executeWorkItem() .... about to throw a ProcessWIHException to processId = "+processId+" and service task strategy = "+strategy);        
-            throw new ProcessWorkItemHandlerException(processId, strategy, new RuntimeException("On purpose"));
+            if(retries > 0) {
+
+                // Relevant when strategy is:  RETRY
+
+                Integer counter = (Integer)workItem.getParameter(COUNTER);
+                if(counter == null) {
+                    System.out.println("Initializing workItem param with name "+COUNTER+" : Retries = "+retries);
+                    counter = 0;
+                }
+                
+                if (counter < retries) {
+                    System.out.println(workItem.getId() + " : throwing a ProcessWIHException to processId = "+processId+" and service task strategy = "+strategy+" : counter = "+counter);
+                    counter++;
+                    workItem.getParameters().put(COUNTER, counter);
+                    throw new ProcessWorkItemHandlerException(processId, strategy, new RuntimeException("On purpose"));
+                } else {
+                    //manager.completeWorkItem(workItem.getId(), workItem.getParameters());
+                    //manager.abortWorkItem(workItem.getId());
+                    throw new RuntimeException("Still not working after the following retries: "+retries);
+                }
+            }else {
+
+                // Relevant when strategy is:  Complete
+
+                System.out.println(workItem.getId() + " : throwing a ProcessWIHException to processId = "+processId+" and service task strategy = "+strategy);
+                throw new ProcessWorkItemHandlerException(processId, strategy, new RuntimeException("On purpose"));
+            }
         }
-        
-        manager.completeWorkItem(workItem.getId(), null);
     }
 
     @Override
