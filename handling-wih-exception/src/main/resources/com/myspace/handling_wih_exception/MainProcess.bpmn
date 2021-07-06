@@ -1,4 +1,4 @@
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" id="_Mz9RsL8aEDm_X6cQ2FMwLA" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd http://www.omg.org/spec/DD/20100524/DC DC.xsd http://www.omg.org/spec/DD/20100524/DI DI.xsd " exporter="jBPM Process Modeler" exporterVersion="2.0" targetNamespace="http://www.omg.org/bpmn20">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" id="_405wUMAsEDmxXsd4x4hkQw" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd http://www.omg.org/spec/DD/20100524/DC DC.xsd http://www.omg.org/spec/DD/20100524/DI DI.xsd " exporter="jBPM Process Modeler" exporterVersion="2.0" targetNamespace="http://www.omg.org/bpmn20">
   <bpmn2:itemDefinition id="_inputItem" structureRef="String"/>
   <bpmn2:itemDefinition id="_outputItem" structureRef="String"/>
   <bpmn2:itemDefinition id="_codeItem" structureRef="Integer"/>
@@ -55,6 +55,10 @@
         <drools:metaData name="elementname">
           <drools:metaValue><![CDATA[ThrowProcessWIHExceptionTimer]]></drools:metaValue>
         </drools:metaData>
+        <drools:onEntry-script scriptFormat="http://www.java.com/java">
+          <drools:script><![CDATA[input = "ThrowProcessWIHException and handle via Retry";
+kcontext.setVariable("input", input);]]></drools:script>
+        </drools:onEntry-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>_920DE8D9-E522-45EF-A3DA-9FE0F382F031</bpmn2:incoming>
       <bpmn2:outgoing>_ABB5DF1B-CDF6-4B26-9FCA-B88FFE73289C</bpmn2:outgoing>
@@ -103,6 +107,10 @@
         <drools:metaData name="elementname">
           <drools:metaValue><![CDATA[ThrowProcessWIHExceptionHT]]></drools:metaValue>
         </drools:metaData>
+        <drools:onEntry-script scriptFormat="http://www.java.com/java">
+          <drools:script><![CDATA[input = "ThrowProcessWIHException and handle via Human Task";
+kcontext.setVariable("input", input);]]></drools:script>
+        </drools:onEntry-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>_438440DF-C336-4394-A853-FF0CB431CF5F</bpmn2:incoming>
       <bpmn2:outgoing>_356F440E-0EF3-4F4B-A6CC-331EC5DD47CD</bpmn2:outgoing>
@@ -324,7 +332,7 @@ Task]]></drools:metaValue>
         </bpsim:Scenario>
       </bpsim:BPSimData>
     </bpmn2:extensionElements>
-    <bpmn2:source>_Mz9RsL8aEDm_X6cQ2FMwLA</bpmn2:source>
-    <bpmn2:target>_Mz9RsL8aEDm_X6cQ2FMwLA</bpmn2:target>
+    <bpmn2:source>_405wUMAsEDmxXsd4x4hkQw</bpmn2:source>
+    <bpmn2:target>_405wUMAsEDmxXsd4x4hkQw</bpmn2:target>
   </bpmn2:relationship>
 </bpmn2:definitions>
