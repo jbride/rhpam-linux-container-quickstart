@@ -50,7 +50,7 @@
       <groupId>org.kie</groupId>
       <artifactId>jbpm-spring-boot-data-sources</artifactId>
       <version>${version.org.kie}</version>
-    </dependency>
+    </dependency>   
 
     <!-- database persistence -->
     <dependency>

@@ -9,10 +9,26 @@ The resultant _Kie Container_  is then packaged into an immutable Linux containe
 
 NOTE: The following commands make use of _podman_, _buildah_ and _podman_compose_.  The equivalent _docker_ family of utilities should also work.
 
-. Build KIE-Server executable : 
+=== KJars
+
+. Build _mortgage_ app with rules
 +
 -----
-$ mvn clean package
+-----
+
+. Build _handling-wih-exception_ 
++
+-----
+-----
+
+==== SpringBoot KIE-Server
+
+. Build and start SpringBoot based KIE-Server app : 
++
+-----
+$ mvn clean package -DskipTests && \
+         java -Dorg.kie.server.repo=etc/rhpam/runtime_configs \
+              -jar target/rhpam-springboot-0.0.1.jar
 -----
 
 . Build linux container with KIE-Server:
@@ -56,10 +72,29 @@ $ curl -u "kieserver:kieserver" -X GET http://localhost:8080/rest/server/contain
 $ curl -u "kieserver:kieserver" -X GET -H 'Accept:application/json' localhost:8080/rest/server/containers/handling-wih-exception/processes/
 -----
 
-. Start a business process
+. Start a business process that throws a ProcessWIHException that delegates to a subprocess with human task
 +
 -----
-$ curl -v -X POST -H 'Content-type:application/json' localhost:8080/rest/server/containers/handling-wih-exception/processes/handling-wih-exception.MainProcess/instances
+$ curl -v -X POST -H 'Content-type:application/json' \
+        localhost:8080/rest/server/containers/handling-wih-exception/processes/handling_wih_exception.MainProcess/instances \
+        -d "{\"input\":\"HT\"}"
+
+$ curl -X GET -H 'Accpet:application/json' localhost:8080/rest/server/queries/tasks/instances/process/{processInstanceId_of_subprocess}
+-----
+
+. Start a business process that throws a ProcessWIHException that retries a subprocess with timer 
++
+-----
+$ curl -v -X POST -H 'Content-type:application/json' \
+        localhost:8080/rest/server/containers/handling-wih-exception/processes/handling_wih_exception.MainProcess/instances \
+        -d "{\"input\":\"TIMER\"}"
+
+-----
+
+. Start a business process and return process variables:
++
+-----
+$ curl -X POST "localhost:8080/custom/processes/startAndReturnVars?correlationKey=rht&input=HT" | jq .
 -----
 
 
