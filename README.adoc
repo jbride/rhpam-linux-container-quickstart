@@ -33,6 +33,18 @@ It includes a pre-configured _KIE Container_ that manages the _mortgages_ KIE ja
 +
 The resultant _Kie Container_  is then packaged into an immutable Linux container.
 
+. *handling-wih-exception*
++
+Simple KJar example with various business processes and WorkItemHandlers that help to highlight the following: 
+
+.. Manage lifecycle of long running business processes via KIE-Server RESTful API of RH-PAM embedded in SpringBoot.
+
+.. Exception handling in a business process using the various strategies of RH-PAM's ProcessWorkItemHandlerException functionality
+
+.. Starting a synchroneous business process (with no wait states) and returning the modified process variables to the invoking client
+
+
+
 == Reference
 
 . link:https://github.com/kiegroup/jbpm/tree/7.48.0.Final/jbpm-db-scripts/src/main/resources/db/ddl-scripts/postgresql[RH-PAM / PostgreSQL Schemas]
@@ -48,3 +60,5 @@ These OpenShift templates are used when deploying traditional KIE-Server and Bus
 These templates reference RH-PAM images found in registry.redhat.io.
 +
 For the purpose of this project, these templates nor RH-PAM container images are not used.
+
+. link:https://mswiderski.blogspot.com/2018/10/handle-service-exceptions-via-subprocess.html[Handle Service Exceptions via Subprocess]
