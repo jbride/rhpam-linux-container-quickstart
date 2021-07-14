@@ -35,7 +35,7 @@ $ mvn clean package -DskipTests && \
 +
 -----
 $ buildah bud -f docker/rhpam-springboot/Dockerfile \
-              -t quay.io/redhat_naps_da/rhpam-sprintboot:0.0.2 
+              -t quay.io/redhat_naps_da/rhpam-springboot:0.0.2 
               .
 -----
 

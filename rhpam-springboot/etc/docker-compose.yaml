@@ -25,46 +25,47 @@ services:
         source: ./rhpam/create_rhpam_database.sh
         target: /opt/app-root/src/postgresql-start/create_rhpam_database.sh
 
-#  dbuilder_runtime:
-#    image: quay.io/redhat_naps_da/dashbuilder-runtime-psql:7.54.0.Final-2
-#    restart: always
-#    ports:
-#      - "8280:8280"
-#      - "10190:10190"
-#    environment:
-#      JAVA_OPTS: '$JAVA_OPTS -Dfile.encoding=UTF-8 -Ddashbuilder.components.dir=/opt/runtime/components -Dorg.kie.server.persistence.ds=java:jboss/datasources/PostgresqlDS -Ddashbuilder.import.base.dir=/opt/dashbuilder/ -Ddashbuilder.runtime.import=/opt/dashbuilder/models/rhpam_db_queries.zip -Djboss.socket.binding.port-offset=200'
-#      LANG: en_US.UTF-8
-#      DB_CONNECTION_URL: jdbc:postgresql://localhost:5432/rhpam
-#      DB_USER: rhpam
-#      DB_PASSWORD: rhpam
-#    user: jboss:root
-#    volumes:
-#      - ./dbuilder-runtime/modules/system/layers/base/org/postgresql/main/:/opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main:z
-#      - ./dbuilder-runtime/dashbuilder/models:/opt/dashbuilder/models:z
-#    depends_on:
-#      - psql_rhpam
+  rhpam_springboot:
+    auto_up: false
+    image: quay.io/redhat_naps_da/rhpam-springboot:0.0.2
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      JAVA_MAX_MEM_RATIO: '60'
+      JAVA_INITIAL_MEM_RATIO: '0'
+      GC_MAX_METASPACE_SIZE: '500'
+      SPRING_CONFIG_LOCATION: "file:///deployments/config/application.properties"
 
-#  rhpam_springboot:
-#    auto_up: false
-#    image: quay.io/redhat_naps_da/rhpam-sprintboot:0.0.2
-#    restart: always
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      JAVA_MAX_MEM_RATIO: '60'
-#      JAVA_INITIAL_MEM_RATIO: '0'
-#      GC_MAX_METASPACE_SIZE: '500'
-#      SPRING_CONFIG_LOCATION: "file:///deployments/config/application.properties"
-#
-#      # org.kie.server.repo: dictates to kie-server where to find its KIE container configuration file
-#      # kie.maven.settings.custom: dictates to kie-server where to fine its artifact repo of KJars
-#      JAVA_OPTS_APPEND: '-Dorg.kie.server.repo=/deployments/config -Dkie.maven.settings.custom=/m2/settings.xml'
-#
-#      # Optional: Change to URL of Nexus (if in use)
-#      MAVEN_MIRROR_URL: ''
-#    volumes:
-#      - type: bind
-#        source: ./rhpam/runtime_configs
-#        target: /deployments/config/
-#    depends_on:
-#      - psql_rhpam
+      # org.kie.server.repo: dictates to kie-server where to find its KIE container configuration file
+      # kie.maven.settings.custom: dictates to kie-server where to fine its artifact repo of KJars
+      JAVA_OPTS_APPEND: '-Dorg.kie.server.repo=/deployments/config -Dkie.maven.settings.custom=/m2/settings.xml'
+
+      # Optional: Change to URL of Nexus (if in use)
+      MAVEN_MIRROR_URL: ''
+    volumes:
+      - type: bind
+        source: ./rhpam/runtime_configs
+        target: /deployments/config/
+    depends_on:
+      - psql_rhpam
+
+  dbuilder_runtime:
+    image: quay.io/redhat_naps_da/dashbuilder-runtime-psql:7.54.0.Final-3
+    restart: always
+    ports:
+      - "8280:8280"
+      - "10190:10190"
+    environment:
+      JAVA_OPTS: '$JAVA_OPTS -Dfile.encoding=UTF-8 -Ddashbuilder.components.dir=/opt/runtime/components -Ddashbuilder.import.base.dir=/opt/dashbuilder/ -Ddashbuilder.runtime.import=/opt/dashbuilder/models/rhpam_default_reports.zip -Djboss.socket.binding.port-offset=200'
+      LANG: en_US.UTF-8
+      DB_CONNECTION_URL: jdbc:postgresql://localhost:5432/rhpam
+      DB_USER: rhpam
+      DB_PASSWORD: rhpam
+    user: jboss:root
+    volumes:
+      - ./dbuilder-runtime/modules/system/layers/base/org/postgresql/main/:/opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main:z
+      - ./dbuilder-runtime/dashbuilder/models:/opt/dashbuilder/models:z
+    depends_on:
+      - psql_rhpam
+
