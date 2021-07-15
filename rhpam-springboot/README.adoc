@@ -187,3 +187,10 @@ curl -v \
   "lengthYears" : null
 }}
 -----
+
+
+podman exec -it etc_dbuilder_runtime_1 /bin/sh
+
+./wildfly/bin/jboss-cli.sh --connect --controller=localhost:10190
+    /subsystem=logging/root-logger=ROOT:write-attribute(name=level, value=DEBUG)
+    /subsystem=logging/console-handler=CONSOLE:write-attribute(name=level, value=DEBUG)
