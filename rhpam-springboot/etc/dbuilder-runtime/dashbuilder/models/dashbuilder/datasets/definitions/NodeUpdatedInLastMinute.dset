@@ -1,0 +1,32 @@
+{
+  "uuid": "NodeUpdatedInLastMinute",
+  "name": "Node updates in the last minute",
+  "provider": "SQL",
+  "isPublic": true,
+  "cacheEnabled": false,
+  "cacheMaxRows": 1000,
+  "pushEnabled": false,
+  "pushMaxSize": 1024,
+  "refreshAlways": false,
+  "dataSource": "java:jboss/datasources/jbpmdb",
+  "dbSQL": "select\n   processid,\n    nodeid as \"NodeId\", \n    DATEDIFF('SECOND', DATE '1970-01-01', log_date) AS \"sec\",\n    count(nodeid) as \"total\"  \nfrom \n    NodeInstanceLog\nwhere\n    datediff('SECOND', log_date, current_timestamp) < 60 \ngroup by \n     processid,\n    nodeid,\n    DATEDIFF('SECOND', DATE '1970-01-01', log_date)\norder by \n    DATEDIFF('SECOND', DATE '1970-01-01', log_date)\nDESC",
+  "allColumns": false,
+  "columns": [
+    {
+      "id": "sec",
+      "type": "number"
+    },
+    {
+      "id": "total",
+      "type": "number"
+    },
+    {
+      "id": "NodeId",
+      "type": "label"
+    },
+    {
+      "id": "PROCESSID",
+      "type": "label"
+    }
+  ]
+}

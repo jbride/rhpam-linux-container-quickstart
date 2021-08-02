@@ -1,0 +1,60 @@
+{
+  "uuid": "TasksStatusCategories",
+  "name": "Tasks Status Categories",
+  "provider": "SQL",
+  "isPublic": true,
+  "cacheEnabled": false,
+  "cacheMaxRows": 1000,
+  "pushEnabled": false,
+  "pushMaxSize": 1024,
+  "refreshAlways": false,
+  "dataSource": "${org.kie.server.persistence.ds}",
+  "dbSQL": "select\nprocessid,\n    name,\n    sum(case when status = 'Created' then 1 else 0 end) as Created,\n    sum(case when status = 'Ready' then 1 else 0 end) as Ready,\n    sum(case when status = 'Reserved' then 1 else 0 end) as Reserved,\n    sum(case when status = 'InProgress' then 1 else 0 end) as InProgress,\n    sum(case when status = 'Completed' then 1 else 0 end) as Completed,\n    sum(case when status = 'Failed' then 1 else 0 end) as Failed,\n    sum(case when status = 'Error' then 1 else 0 end) as Error,\n    sum(case when status = 'Exited' then 1 else 0 end) as Exited,\n    sum(case when status = 'Obsolete' then 1 else 0 end) as Obsolete\nfrom \n    AuditTaskImpl \ngroup by\nprocessid,\n name\n",
+  "allColumns": false,
+  "columns": [
+    {
+      "id": "READY",
+      "type": "number"
+    },
+    {
+      "id": "CREATED",
+      "type": "number"
+    },
+    {
+      "id": "COMPLETED",
+      "type": "number"
+    },
+    {
+      "id": "FAILED",
+      "type": "number"
+    },
+    {
+      "id": "EXITED",
+      "type": "number"
+    },
+    {
+      "id": "INPROGRESS",
+      "type": "number"
+    },
+    {
+      "id": "ERROR",
+      "type": "number"
+    },
+    {
+      "id": "RESERVED",
+      "type": "number"
+    },
+    {
+      "id": "PROCESSID",
+      "type": "label"
+    },
+    {
+      "id": "OBSOLETE",
+      "type": "number"
+    },
+    {
+      "id": "NAME",
+      "type": "label"
+    }
+  ]
+}

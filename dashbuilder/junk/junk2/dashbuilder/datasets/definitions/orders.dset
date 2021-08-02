@@ -1,0 +1,14 @@
+{
+  "uuid": "orders",
+  "name": "orders",
+  "provider": "SQL",
+  "isPublic": true,
+  "cacheEnabled": false,
+  "cacheMaxRows": 1000,
+  "pushEnabled": false,
+  "pushMaxSize": 1024,
+  "refreshAlways": false,
+  "dataSource": "sample",
+  "dbTable": "orders",
+  "allColumns": true
+}

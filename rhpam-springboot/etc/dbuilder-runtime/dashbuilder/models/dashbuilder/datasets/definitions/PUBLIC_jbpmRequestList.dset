@@ -1,0 +1,14 @@
+{
+  "uuid": "PUBLIC_jbpmRequestList",
+  "name": "PUBLIC jbpmRequestList",
+  "provider": "SQL",
+  "isPublic": true,
+  "cacheEnabled": false,
+  "cacheMaxRows": 1000,
+  "pushEnabled": false,
+  "pushMaxSize": 1024,
+  "refreshAlways": false,
+  "dataSource": "java:jboss/datasources/jbpmdb",
+  "dbSQL": "select ri.id, ri.timestamp, ri.status, ri.commandName, ri.message, ri.businessKey, ri.retries, ri.executions, pil.processName, pil.processInstanceId, pil.processInstanceDescription, ri.deploymentId from RequestInfo ri left join ProcessInstanceLog pil on pil.processInstanceId=ri.processInstanceId",
+  "allColumns": true
+}

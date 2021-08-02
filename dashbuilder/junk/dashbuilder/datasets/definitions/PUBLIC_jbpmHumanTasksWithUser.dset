@@ -1,0 +1,108 @@
+{
+  "uuid": "PUBLIC_jbpmHumanTasksWithUser",
+  "name": "PUBLIC jbpmHumanTasksWithUser",
+  "provider": "SQL",
+  "isPublic": true,
+  "cacheEnabled": false,
+  "cacheMaxRows": 1000,
+  "pushEnabled": false,
+  "pushMaxSize": 1024,
+  "refreshAlways": false,
+  "dataSource": "${org.kie.server.persistence.ds}",
+  "dbSQL": "select t.activationTime, t.actualOwner, t.createdBy, t.createdOn, t.deploymentId, t.description, t.dueDate, t.name, t.parentId, t.priority, t.processId, t.processInstanceId, t.processSessionId, t.status, t.taskId, t.workItemId, t.lastModificationDate, pil.correlationKey, pil.processInstanceDescription , oe.id, eo.entity_id, nil.sla_due_date, nil.slaCompliance from AuditTaskImpl t left join PeopleAssignments_PotOwners po on t.taskId=po.task_id left join OrganizationalEntity oe on po.entity_id=oe.id left join ProcessInstanceLog pil on pil.processInstanceId=t.processInstanceId left join PeopleAssignments_ExclOwners eo on t.taskId=eo.task_id left join NodeInstanceLog nil on nil.workItemId=t.workItemId",
+  "allColumns": false,
+  "columns": [
+    {
+      "id": "PROCESSSESSIONID",
+      "type": "number"
+    },
+    {
+      "id": "SLACOMPLIANCE",
+      "type": "number"
+    },
+    {
+      "id": "ENTITY_ID",
+      "type": "label"
+    },
+    {
+      "id": "CREATEDON",
+      "type": "date"
+    },
+    {
+      "id": "WORKITEMID",
+      "type": "number"
+    },
+    {
+      "id": "PRIORITY",
+      "type": "number"
+    },
+    {
+      "id": "ACTUALOWNER",
+      "type": "label"
+    },
+    {
+      "id": "NAME",
+      "type": "label"
+    },
+    {
+      "id": "ACTIVATIONTIME",
+      "type": "date"
+    },
+    {
+      "id": "TASKID",
+      "type": "number"
+    },
+    {
+      "id": "PROCESSINSTANCEID",
+      "type": "number"
+    },
+    {
+      "id": "STATUS",
+      "type": "label"
+    },
+    {
+      "id": "PROCESSINSTANCEDESCRIPTION",
+      "type": "label"
+    },
+    {
+      "id": "SLA_DUE_DATE",
+      "type": "date"
+    },
+    {
+      "id": "PARENTID",
+      "type": "number"
+    },
+    {
+      "id": "DESCRIPTION",
+      "type": "label"
+    },
+    {
+      "id": "DEPLOYMENTID",
+      "type": "label"
+    },
+    {
+      "id": "LASTMODIFICATIONDATE",
+      "type": "date"
+    },
+    {
+      "id": "CORRELATIONKEY",
+      "type": "label"
+    },
+    {
+      "id": "ID",
+      "type": "label"
+    },
+    {
+      "id": "CREATEDBY",
+      "type": "label"
+    },
+    {
+      "id": "DUEDATE",
+      "type": "date"
+    },
+    {
+      "id": "PROCESSID",
+      "type": "label"
+    }
+  ]
+}

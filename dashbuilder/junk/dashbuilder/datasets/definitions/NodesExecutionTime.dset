@@ -1,0 +1,52 @@
+{
+  "uuid": "NodesExecutionTime",
+  "name": "Nodes Execution Time",
+  "provider": "SQL",
+  "isPublic": true,
+  "cacheEnabled": false,
+  "cacheMaxRows": 1000,
+  "pushEnabled": false,
+  "pushMaxSize": 1024,
+  "refreshAlways": false,
+  "dataSource": "${org.kie.server.persistence.ds}",
+  "dbSQL": "select\n   pil.externalId,\n   pil.processId,\n    nid,\n    nodetype,\n    nodename,\n    count(nid) as total_hits,\n    avg(execution_time) as averageExecutionTime,\n    min(execution_time) as minExecutionTime,\n    max(execution_time) as maxExecutionTime\nfrom(\n        select\n                max(log_date) as lastLog,\n                processinstanceid as piid,  \n                nodeinstanceid as niid, \n                nodeid as nid, \n                nodetype,\n                nodename, \n                DATEDIFF(SECOND, min(log_date), max(log_date)) as execution_time     \n        from \n                NodeInstanceLog \n        group by\n              processinstanceid, \n               nodeinstanceid, \n              nid\n       order by lastLog\n)\ninner join\n     ProcessInstanceLog pil on pil.processInstanceId = piid\ngroup by \n     pil.externalId,\n     nid,\n     nodename\n",
+  "allColumns": false,
+  "columns": [
+    {
+      "id": "AVERAGEEXECUTIONTIME",
+      "type": "number"
+    },
+    {
+      "id": "MAXEXECUTIONTIME",
+      "type": "number"
+    },
+    {
+      "id": "MINEXECUTIONTIME",
+      "type": "number"
+    },
+    {
+      "id": "TOTAL_HITS",
+      "type": "number"
+    },
+    {
+      "id": "NID",
+      "type": "label"
+    },
+    {
+      "id": "NODETYPE",
+      "type": "label"
+    },
+    {
+      "id": "PROCESSID",
+      "type": "label"
+    },
+    {
+      "id": "EXTERNALID",
+      "type": "label"
+    },
+    {
+      "id": "NODENAME",
+      "type": "label"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+-----
+$ java -Ddashbuilder.runtime.multi=true \
+    -Ddashbuilder.datasources=rhpam \
+    -Ddashbuilder.datasource.rhpam.jdbcUrl=jdbc:postgresql://localhost:5432/rhpam \
+    -Ddashbuilder.datasource.rhpam.providerClassName=org.postgresql.Driver \
+    -Ddashbuilder.datasource.rhpam.maxSize=10 \
+    -Ddashbuilder.datasource.rhpam.principal=rhpam \
+    -Ddashbuilder.datasource.rhpam.credential=rhpam \
+    -Dquarkus.http.enable-compression=false \
+    -jar ~/Downloads/dashbuilder-runtime-app-7.56.0-SNAPSHOT-runner.jar
+
+-----

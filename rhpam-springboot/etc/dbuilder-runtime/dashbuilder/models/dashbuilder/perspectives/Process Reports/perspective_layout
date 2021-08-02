@@ -1,0 +1,412 @@
+{
+  "version": 3,
+  "name": "Process Reports",
+  "style": "FLUID",
+  "layoutProperties": {
+    "background-color": "#F1F1F1"
+  },
+  "rows": [
+    {
+      "height": "12",
+      "properties": {
+        "margin-left": "20px",
+        "margin-bottom": "20px",
+        "height": "100px"
+      },
+      "layoutColumns": [
+        {
+          "span": "2",
+          "height": "12",
+          "properties": {},
+          "rows": [],
+          "layoutComponents": [
+            {
+              "dragTypeName": "org.dashbuilder.client.editor.MetricDragComponent",
+              "properties": {
+                "json": "{\n  \"uuid\": \"gwt-uid-208\",\n  \"type\": \"METRIC\",\n  \"subtype\": \"METRIC_CARD\",\n  \"general\": {\n    \"title\": \"Total Processes\",\n    \"visible\": \"true\"\n  },\n  \"chart\": {\n    \"width\": \"200\",\n    \"height\": \"100\",\n    \"margin\": {\n      \"top\": \"0\",\n      \"bottom\": \"0\",\n      \"left\": \"0\",\n      \"right\": \"0\"\n    },\n    \"bgColor\": \"white\"\n  },\n  \"filter\": {\n    \"enabled\": \"false\",\n    \"selfapply\": \"false\",\n    \"notification\": \"false\",\n    \"listening\": \"true\"\n  },\n  \"html\": {\n    \"html\": \"\u003cdiv id\u003d\\\"${this}\\\" class\u003d\\\"card-pf card-pf-accented card-pf-aggregate-status\\\" style\u003d\\\"background-color:${bgColor}; width:${width}px; height:${height}px; margin-top:${marginTop}px; margin-right:${marginRight}px; margin-bottom:${marginBottom}px; margin-left:${marginLeft}px;\\\"\u003e\\n  \u003ch2\u003e${value}\u003c/h2\u003e\\n  \u003cp\u003e${title}\u003c/p\u003e\\n\u003c/div\u003e\",\n    \"javascript\": \"\\\"\\\";\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"groupOps\": [\n      {\n        \"groupFunctions\": [\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  },\n  \"columns\": [\n    {\n      \"id\": \"processInstanceId\",\n      \"pattern\": \"#\"\n    }\n  ]\n}"
+              },
+              "parts": []
+            }
+          ]
+        },
+        {
+          "span": "2",
+          "height": "12",
+          "properties": {},
+          "rows": [],
+          "layoutComponents": [
+            {
+              "dragTypeName": "org.dashbuilder.client.editor.MetricDragComponent",
+              "properties": {
+                "json": "{\n  \"uuid\": \"gwt-uid-308\",\n  \"type\": \"METRIC\",\n  \"subtype\": \"METRIC_CARD\",\n  \"general\": {\n    \"title\": \"Active Processes\",\n    \"visible\": \"true\"\n  },\n  \"chart\": {\n    \"width\": \"200\",\n    \"height\": \"100\",\n    \"margin\": {\n      \"top\": \"0\",\n      \"bottom\": \"0\",\n      \"left\": \"0\",\n      \"right\": \"0\"\n    },\n    \"bgColor\": \"white\"\n  },\n  \"filter\": {\n    \"enabled\": \"false\",\n    \"selfapply\": \"false\",\n    \"notification\": \"false\",\n    \"listening\": \"true\"\n  },\n  \"html\": {\n    \"html\": \"\u003cdiv id\u003d\\\"${this}\\\" class\u003d\\\"card-pf card-pf-accented card-pf-aggregate-status\\\" style\u003d\\\"background-color:${bgColor}; width:${width}px; height:${height}px; margin-top:${marginTop}px; margin-right:${marginRight}px; margin-bottom:${marginBottom}px; margin-left:${marginLeft}px;\\\"\u003e\\n  \u003ch2\u003e${value}\u003c/h2\u003e\\n  \u003cp\u003e${title}\u003c/p\u003e\\n\u003c/div\u003e\",\n    \"javascript\": \"if (${isFilterEnabled}) {  \\n  var filterOn \u003d false;\\n  ${this}.style.cursor\u003d\\\"pointer\\\";\\n\\n  ${this}.onmouseover \u003d function() {\\n    if (!filterOn) ${this}.style.backgroundColor \u003d \\\"lightblue\\\";\\n  };\\n  ${this}.onmouseout \u003d function() {\\n    if (!filterOn) ${this}.style.backgroundColor \u003d \\\"${bgColor}\\\";\\n  };\\n  ${this}.onclick \u003d function() {\\n    filterOn \u003d !filterOn;\\n    ${this}.style.backgroundColor \u003d filterOn ? \\\"lightblue\\\" : \\\"${bgColor}\\\";\\n    ${doFilter};\\n  };\\n}\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"filterOps\": [\n      {\n        \"column\": \"status\",\n        \"function\": \"EQUALS_TO\",\n        \"args\": [\n          1\n        ]\n      }\n    ],\n    \"groupOps\": [\n      {\n        \"groupFunctions\": [\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  },\n  \"columns\": [\n    {\n      \"id\": \"processInstanceId\",\n      \"pattern\": \"#\"\n    }\n  ]\n}"
+              },
+              "parts": []
+            }
+          ]
+        },
+        {
+          "span": "2",
+          "height": "12",
+          "properties": {},
+          "rows": [],
+          "layoutComponents": [
+            {
+              "dragTypeName": "org.dashbuilder.client.editor.MetricDragComponent",
+              "properties": {
+                "json": "{\n  \"uuid\": \"gwt-uid-429\",\n  \"type\": \"METRIC\",\n  \"subtype\": \"METRIC_CARD\",\n  \"general\": {\n    \"title\": \"Pending Processes\",\n    \"visible\": \"true\"\n  },\n  \"chart\": {\n    \"width\": \"200\",\n    \"height\": \"100\",\n    \"margin\": {\n      \"top\": \"0\",\n      \"bottom\": \"0\",\n      \"left\": \"0\",\n      \"right\": \"0\"\n    },\n    \"bgColor\": \"white\"\n  },\n  \"filter\": {\n    \"enabled\": \"false\",\n    \"selfapply\": \"false\",\n    \"notification\": \"false\",\n    \"listening\": \"true\"\n  },\n  \"html\": {\n    \"html\": \"\u003cdiv id\u003d\\\"${this}\\\" class\u003d\\\"card-pf card-pf-accented card-pf-aggregate-status\\\" style\u003d\\\"background-color:${bgColor}; width:${width}px; height:${height}px; margin-top:${marginTop}px; margin-right:${marginRight}px; margin-bottom:${marginBottom}px; margin-left:${marginLeft}px;\\\"\u003e\\n  \u003ch2\u003e${value}\u003c/h2\u003e\\n  \u003cp\u003e${title}\u003c/p\u003e\\n\u003c/div\u003e\",\n    \"javascript\": \"if (${isFilterEnabled}) {  \\n  var filterOn \u003d false;\\n  ${this}.style.cursor\u003d\\\"pointer\\\";\\n\\n  ${this}.onmouseover \u003d function() {\\n    if (!filterOn) ${this}.style.backgroundColor \u003d \\\"lightblue\\\";\\n  };\\n  ${this}.onmouseout \u003d function() {\\n    if (!filterOn) ${this}.style.backgroundColor \u003d \\\"${bgColor}\\\";\\n  };\\n  ${this}.onclick \u003d function() {\\n    filterOn \u003d !filterOn;\\n    ${this}.style.backgroundColor \u003d filterOn ? \\\"lightblue\\\" : \\\"${bgColor}\\\";\\n    ${doFilter};\\n  };\\n}\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"filterOps\": [\n      {\n        \"column\": \"status\",\n        \"function\": \"EQUALS_TO\",\n        \"args\": [\n          0\n        ]\n      }\n    ],\n    \"groupOps\": [\n      {\n        \"groupFunctions\": [\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  },\n  \"columns\": [\n    {\n      \"id\": \"processInstanceId\",\n      \"pattern\": \"#\"\n    }\n  ]\n}"
+              },
+              "parts": []
+            }
+          ]
+        },
+        {
+          "span": "2",
+          "height": "12",
+          "properties": {},
+          "rows": [],
+          "layoutComponents": [
+            {
+              "dragTypeName": "org.dashbuilder.client.editor.MetricDragComponent",
+              "properties": {
+                "json": "{\n  \"uuid\": \"gwt-uid-570\",\n  \"type\": \"METRIC\",\n  \"subtype\": \"METRIC_CARD\",\n  \"general\": {\n    \"title\": \"Suspended Processes\",\n    \"visible\": \"true\"\n  },\n  \"chart\": {\n    \"width\": \"200\",\n    \"height\": \"100\",\n    \"margin\": {\n      \"top\": \"0\",\n      \"bottom\": \"0\",\n      \"left\": \"0\",\n      \"right\": \"0\"\n    },\n    \"bgColor\": \"white\"\n  },\n  \"filter\": {\n    \"enabled\": \"false\",\n    \"selfapply\": \"false\",\n    \"notification\": \"false\",\n    \"listening\": \"true\"\n  },\n  \"html\": {\n    \"html\": \"\u003cdiv id\u003d\\\"${this}\\\" class\u003d\\\"card-pf card-pf-accented card-pf-aggregate-status\\\" style\u003d\\\"background-color:${bgColor}; width:${width}px; height:${height}px; margin-top:${marginTop}px; margin-right:${marginRight}px; margin-bottom:${marginBottom}px; margin-left:${marginLeft}px;\\\"\u003e\\n  \u003ch2\u003e${value}\u003c/h2\u003e\\n  \u003cp\u003e${title}\u003c/p\u003e\\n\u003c/div\u003e\",\n    \"javascript\": \"if (${isFilterEnabled}) {  \\n  var filterOn \u003d false;\\n  ${this}.style.cursor\u003d\\\"pointer\\\";\\n\\n  ${this}.onmouseover \u003d function() {\\n    if (!filterOn) ${this}.style.backgroundColor \u003d \\\"lightblue\\\";\\n  };\\n  ${this}.onmouseout \u003d function() {\\n    if (!filterOn) ${this}.style.backgroundColor \u003d \\\"${bgColor}\\\";\\n  };\\n  ${this}.onclick \u003d function() {\\n    filterOn \u003d !filterOn;\\n    ${this}.style.backgroundColor \u003d filterOn ? \\\"lightblue\\\" : \\\"${bgColor}\\\";\\n    ${doFilter};\\n  };\\n}\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"filterOps\": [\n      {\n        \"column\": \"status\",\n        \"function\": \"EQUALS_TO\",\n        \"args\": [\n          4\n        ]\n      }\n    ],\n    \"groupOps\": [\n      {\n        \"groupFunctions\": [\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  },\n  \"columns\": [\n    {\n      \"id\": \"processInstanceId\",\n      \"pattern\": \"#\"\n    }\n  ]\n}"
+              },
+              "parts": []
+            }
+          ]
+        },
+        {
+          "span": "2",
+          "height": "12",
+          "properties": {},
+          "rows": [],
+          "layoutComponents": [
+            {
+              "dragTypeName": "org.dashbuilder.client.editor.MetricDragComponent",
+              "properties": {
+                "json": "{\n  \"uuid\": \"gwt-uid-759\",\n  \"type\": \"METRIC\",\n  \"subtype\": \"METRIC_CARD\",\n  \"general\": {\n    \"title\": \"Aborted Processes\",\n    \"visible\": \"true\"\n  },\n  \"chart\": {\n    \"width\": \"200\",\n    \"height\": \"100\",\n    \"margin\": {\n      \"top\": \"0\",\n      \"bottom\": \"0\",\n      \"left\": \"0\",\n      \"right\": \"0\"\n    },\n    \"bgColor\": \"white\"\n  },\n  \"filter\": {\n    \"enabled\": \"false\",\n    \"selfapply\": \"false\",\n    \"notification\": \"false\",\n    \"listening\": \"true\"\n  },\n  \"html\": {\n    \"html\": \"\u003cdiv id\u003d\\\"${this}\\\" class\u003d\\\"card-pf card-pf-accented card-pf-aggregate-status\\\" style\u003d\\\"background-color:${bgColor}; width:${width}px; height:${height}px; margin-top:${marginTop}px; margin-right:${marginRight}px; margin-bottom:${marginBottom}px; margin-left:${marginLeft}px;\\\"\u003e\\n  \u003ch2\u003e${value}\u003c/h2\u003e\\n  \u003cp\u003e${title}\u003c/p\u003e\\n\u003c/div\u003e\",\n    \"javascript\": \"if (${isFilterEnabled}) {  \\n  var filterOn \u003d false;\\n  ${this}.style.cursor\u003d\\\"pointer\\\";\\n\\n  ${this}.onmouseover \u003d function() {\\n    if (!filterOn) ${this}.style.backgroundColor \u003d \\\"lightblue\\\";\\n  };\\n  ${this}.onmouseout \u003d function() {\\n    if (!filterOn) ${this}.style.backgroundColor \u003d \\\"${bgColor}\\\";\\n  };\\n  ${this}.onclick \u003d function() {\\n    filterOn \u003d !filterOn;\\n    ${this}.style.backgroundColor \u003d filterOn ? \\\"lightblue\\\" : \\\"${bgColor}\\\";\\n    ${doFilter};\\n  };\\n}\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"filterOps\": [\n      {\n        \"column\": \"status\",\n        \"function\": \"EQUALS_TO\",\n        \"args\": [\n          3\n        ]\n      }\n    ],\n    \"groupOps\": [\n      {\n        \"groupFunctions\": [\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  },\n  \"columns\": [\n    {\n      \"id\": \"processInstanceId\",\n      \"pattern\": \"#\"\n    }\n  ]\n}"
+              },
+              "parts": []
+            }
+          ]
+        },
+        {
+          "span": "2",
+          "height": "12",
+          "properties": {},
+          "rows": [],
+          "layoutComponents": [
+            {
+              "dragTypeName": "org.dashbuilder.client.editor.MetricDragComponent",
+              "properties": {
+                "json": "{\n  \"uuid\": \"gwt-uid-851\",\n  \"type\": \"METRIC\",\n  \"subtype\": \"METRIC_CARD\",\n  \"general\": {\n    \"title\": \"Completed Processes\",\n    \"visible\": \"true\"\n  },\n  \"chart\": {\n    \"width\": \"200\",\n    \"height\": \"100\",\n    \"margin\": {\n      \"top\": \"0\",\n      \"bottom\": \"0\",\n      \"left\": \"0\",\n      \"right\": \"0\"\n    },\n    \"bgColor\": \"white\"\n  },\n  \"filter\": {\n    \"enabled\": \"false\",\n    \"selfapply\": \"false\",\n    \"notification\": \"false\",\n    \"listening\": \"true\"\n  },\n  \"html\": {\n    \"html\": \"\u003cdiv id\u003d\\\"${this}\\\" class\u003d\\\"card-pf card-pf-accented card-pf-aggregate-status\\\" style\u003d\\\"background-color:${bgColor}; width:${width}px; height:${height}px; margin-top:${marginTop}px; margin-right:${marginRight}px; margin-bottom:${marginBottom}px; margin-left:${marginLeft}px;\\\"\u003e\\n  \u003ch2\u003e${value}\u003c/h2\u003e\\n  \u003cp\u003e${title}\u003c/p\u003e\\n\\n\u003c/div\u003e\",\n    \"javascript\": \"\\\"\\\";\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"filterOps\": [\n      {\n        \"column\": \"status\",\n        \"function\": \"EQUALS_TO\",\n        \"args\": [\n          2\n        ]\n      }\n    ],\n    \"groupOps\": [\n      {\n        \"groupFunctions\": [\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  },\n  \"columns\": [\n    {\n      \"id\": \"processInstanceId\",\n      \"pattern\": \"#\"\n    }\n  ]\n}"
+              },
+              "parts": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "height": "12",
+      "properties": {
+        "margin-left": "20px",
+        "margin-bottom": "20px",
+        "height": "300px"
+      },
+      "layoutColumns": [
+        {
+          "span": "4",
+          "height": "12",
+          "properties": {},
+          "rows": [
+            {
+              "height": "12",
+              "properties": {},
+              "layoutColumns": [
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.uberfire.ext.plugin.client.perspective.editor.layout.editor.HTMLLayoutDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "width": "100%",
+                        "HTML_CODE": "\u003cspan style\u003d\"font-size: large;\"\u003eProcess By Type\u003c/span\u003e\u003cstrong\u003e\u003chr\u003e\u003c/strong\u003e",
+                        "height": "80px"
+                      },
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.dashbuilder.client.editor.PieChartDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "json": "{\n  \"uuid\": \"gwt-uid-935\",\n  \"type\": \"PIECHART\",\n  \"subtype\": \"PIE\",\n  \"general\": {\n    \"title\": \"- New Displayer -\",\n    \"visible\": \"false\"\n  },\n  \"chart\": {\n    \"width\": \"300\",\n    \"height\": \"220\",\n    \"margin\": {\n      \"top\": \"10\",\n      \"bottom\": \"10\",\n      \"left\": \"10\",\n      \"right\": \"100\"\n    },\n    \"legend\": {\n      \"show\": \"true\",\n      \"position\": \"RIGHT\"\n    },\n    \"3d\": \"true\",\n    \"resizable\": \"false\"\n  },\n  \"filter\": {\n    \"enabled\": \"true\",\n    \"selfapply\": \"false\",\n    \"notification\": \"true\",\n    \"listening\": \"true\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"groupOps\": [\n      {\n        \"columnGroup\": {\n          \"source\": \"processName\",\n          \"column\": \"processName\",\n          \"groupStrategy\": \"DYNAMIC\",\n          \"maxIntervals\": \"15\",\n          \"emptyIntervals\": \"false\",\n          \"asc\": \"true\",\n          \"firstMonthOfYear\": \"JANUARY\",\n          \"firstDayOfWeek\": \"MONDAY\"\n        },\n        \"groupFunctions\": [\n          {\n            \"source\": \"processName\",\n            \"column\": \"processName\"\n          },\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  }\n}"
+                      },
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "layoutComponents": []
+        },
+        {
+          "span": "4",
+          "height": "12",
+          "properties": {},
+          "rows": [
+            {
+              "height": "12",
+              "properties": {},
+              "layoutColumns": [
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.uberfire.ext.plugin.client.perspective.editor.layout.editor.HTMLLayoutDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "HTML_CODE": "\u003cspan style\u003d\"font-size: large;\"\u003eProcesses By Start Date\u003c/span\u003e\u003chr\u003e",
+                        "height": "80px"
+                      },
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.dashbuilder.client.editor.LineChartDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "json": "{\n  \"uuid\": \"gwt-uid-2375\",\n  \"type\": \"AREACHART\",\n  \"subtype\": \"AREA\",\n  \"general\": {\n    \"title\": \"Population per Continent\",\n    \"visible\": \"false\"\n  },\n  \"chart\": {\n    \"width\": \"300\",\n    \"height\": \"220\",\n    \"margin\": {\n      \"top\": \"10\",\n      \"bottom\": \"40\",\n      \"left\": \"90\",\n      \"right\": \"10\"\n    },\n    \"legend\": {\n      \"show\": \"false\"\n    }\n  },\n  \"filter\": {\n    \"enabled\": \"true\",\n    \"selfapply\": \"false\",\n    \"notification\": \"true\",\n    \"listening\": \"true\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"groupOps\": [\n      {\n        \"columnGroup\": {\n          \"source\": \"start_date\",\n          \"column\": \"start_date\",\n          \"groupStrategy\": \"DYNAMIC\",\n          \"maxIntervals\": \"15\",\n          \"emptyIntervals\": \"false\",\n          \"asc\": \"true\",\n          \"firstMonthOfYear\": \"JANUARY\",\n          \"firstDayOfWeek\": \"MONDAY\"\n        },\n        \"groupFunctions\": [\n          {\n            \"source\": \"start_date\",\n            \"column\": \"start_date\"\n          },\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  },\n  \"columns\": [\n    {\n      \"id\": \"start_date\",\n      \"pattern\": \"yyyy-MM-dd\"\n    },\n    {\n      \"id\": \"processInstanceId\",\n      \"name\": \"processInstanceId\",\n      \"pattern\": \"#\"\n    }\n  ]\n}"
+                      },
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "layoutComponents": []
+        },
+        {
+          "span": "4",
+          "height": "12",
+          "properties": {},
+          "rows": [
+            {
+              "height": "12",
+              "properties": {},
+              "layoutColumns": [
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.uberfire.ext.plugin.client.perspective.editor.layout.editor.HTMLLayoutDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "HTML_CODE": "\u003cspan style\u003d\"font-size: large;\"\u003eProcesses Started By User\u003c/span\u003e\u003chr\u003e",
+                        "height": "80px"
+                      },
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.dashbuilder.client.editor.BarChartDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "json": "{\n  \"uuid\": \"gwt-uid-1222\",\n  \"type\": \"BARCHART\",\n  \"subtype\": \"BAR\",\n  \"general\": {\n    \"title\": \"Top Rich Countries\",\n    \"visible\": \"false\"\n  },\n  \"chart\": {\n    \"width\": \"300\",\n    \"height\": \"220\",\n    \"margin\": {\n      \"top\": \"10\",\n      \"bottom\": \"40\",\n      \"left\": \"100\",\n      \"right\": \"50\"\n    },\n    \"legend\": {\n      \"show\": \"true\",\n      \"position\": \"RIGHT\"\n    }\n  },\n  \"filter\": {\n    \"enabled\": \"true\",\n    \"selfapply\": \"false\",\n    \"notification\": \"true\",\n    \"listening\": \"true\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"groupOps\": [\n      {\n        \"columnGroup\": {\n          \"source\": \"user_identity\",\n          \"column\": \"user_identity\",\n          \"groupStrategy\": \"DYNAMIC\",\n          \"maxIntervals\": \"15\",\n          \"emptyIntervals\": \"false\",\n          \"asc\": \"true\",\n          \"firstMonthOfYear\": \"JANUARY\",\n          \"firstDayOfWeek\": \"MONDAY\"\n        },\n        \"groupFunctions\": [\n          {\n            \"source\": \"user_identity\",\n            \"column\": \"user_identity\"\n          },\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  },\n  \"columns\": [\n    {\n      \"id\": \"processInstanceId\",\n      \"name\": \"Processes\",\n      \"expression\": \"value\",\n      \"pattern\": \"#\"\n    }\n  ]\n}"
+                      },
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "layoutComponents": []
+        }
+      ]
+    },
+    {
+      "height": "12",
+      "properties": {
+        "margin-left": "20px",
+        "height": "300px"
+      },
+      "layoutColumns": [
+        {
+          "span": "4",
+          "height": "12",
+          "properties": {},
+          "rows": [
+            {
+              "height": "12",
+              "properties": {},
+              "layoutColumns": [
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.uberfire.ext.plugin.client.perspective.editor.layout.editor.HTMLLayoutDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "HTML_CODE": "\u003cspan style\u003d\"font-size: large;\"\u003eProcesses By Running Time\u003c/span\u003e\u003chr\u003e",
+                        "height": "80px"
+                      },
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.dashbuilder.client.editor.BubbleChartDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "json": "{\n  \"uuid\": \"gwt-uid-1643\",\n  \"type\": \"BUBBLECHART\",\n  \"general\": {\n    \"title\": \"- New Displayer -\",\n    \"visible\": \"false\"\n  },\n  \"chart\": {\n    \"width\": \"300\",\n    \"height\": \"220\",\n    \"margin\": {\n      \"top\": \"10\",\n      \"bottom\": \"30\",\n      \"left\": \"100\",\n      \"right\": \"10\"\n    },\n    \"legend\": {\n      \"show\": \"false\"\n    }\n  },\n  \"filter\": {\n    \"enabled\": \"true\",\n    \"selfapply\": \"false\",\n    \"notification\": \"true\",\n    \"listening\": \"true\"\n  },\n  \"axis\": {\n    \"x\": {\n      \"labels_show\": \"true\",\n      \"title\": \"Process Count\",\n      \"labels_angle\": \"0\"\n    }\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"filterOps\": [\n      {\n        \"column\": \"status\",\n        \"function\": \"NOT_EQUALS_TO\",\n        \"args\": [\n          1\n        ]\n      }\n    ],\n    \"groupOps\": [\n      {\n        \"columnGroup\": {\n          \"source\": \"processName\",\n          \"column\": \"processName\",\n          \"groupStrategy\": \"DYNAMIC\",\n          \"maxIntervals\": \"15\",\n          \"emptyIntervals\": \"false\",\n          \"asc\": \"true\",\n          \"firstMonthOfYear\": \"JANUARY\",\n          \"firstDayOfWeek\": \"MONDAY\"\n        },\n        \"groupFunctions\": [\n          {\n            \"source\": \"processName\",\n            \"column\": \"processName\"\n          },\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          },\n          {\n            \"source\": \"duration\",\n            \"column\": \"duration\",\n            \"function\": \"AVERAGE\"\n          },\n          {\n            \"source\": \"processName\",\n            \"column\": \"processName_2\"\n          },\n          {\n            \"source\": \"duration\",\n            \"column\": \"duration_2\",\n            \"function\": \"AVERAGE\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  },\n  \"columns\": [\n    {\n      \"id\": \"processInstanceId\",\n      \"name\": \"processInstanceId\",\n      \"expression\": \"value\",\n      \"pattern\": \"#,###\"\n    },\n    {\n      \"id\": \"duration\",\n      \"name\": \"duration\",\n      \"expression\": \"value / 1000\",\n      \"pattern\": \"#,##0.00\"\n    },\n    {\n      \"id\": \"duration_2\",\n      \"name\": \"duration_2\",\n      \"expression\": \"value / 1000\",\n      \"pattern\": \"#,###\"\n    }\n  ]\n}"
+                      },
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "layoutComponents": []
+        },
+        {
+          "span": "4",
+          "height": "12",
+          "properties": {},
+          "rows": [
+            {
+              "height": "12",
+              "properties": {},
+              "layoutColumns": [
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.uberfire.ext.plugin.client.perspective.editor.layout.editor.HTMLLayoutDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "HTML_CODE": "\u003cspan style\u003d\"font-size: large;\"\u003eProcess By End Date\u003c/span\u003e\u003chr\u003e",
+                        "height": "80px"
+                      },
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.dashbuilder.client.editor.LineChartDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "json": "{\n  \"uuid\": \"gwt-uid-1892\",\n  \"type\": \"AREACHART\",\n  \"subtype\": \"AREA\",\n  \"general\": {\n    \"title\": \"Population per Continent\",\n    \"visible\": \"false\"\n  },\n  \"chart\": {\n    \"width\": \"300\",\n    \"height\": \"220\",\n    \"margin\": {\n      \"top\": \"10\",\n      \"bottom\": \"40\",\n      \"left\": \"90\",\n      \"right\": \"10\"\n    },\n    \"legend\": {\n      \"show\": \"false\"\n    }\n  },\n  \"filter\": {\n    \"enabled\": \"true\",\n    \"selfapply\": \"false\",\n    \"notification\": \"true\",\n    \"listening\": \"true\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"groupOps\": [\n      {\n        \"columnGroup\": {\n          \"source\": \"end_date\",\n          \"column\": \"end_date\",\n          \"groupStrategy\": \"DYNAMIC\",\n          \"maxIntervals\": \"15\",\n          \"emptyIntervals\": \"false\",\n          \"asc\": \"true\",\n          \"firstMonthOfYear\": \"JANUARY\",\n          \"firstDayOfWeek\": \"MONDAY\"\n        },\n        \"groupFunctions\": [\n          {\n            \"source\": \"end_date\",\n            \"column\": \"end_date\"\n          },\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  },\n  \"columns\": [\n    {\n      \"id\": \"processInstanceId\",\n      \"name\": \"Processes\",\n      \"expression\": \"value\",\n      \"pattern\": \"#\"\n    }\n  ]\n}"
+                      },
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "layoutComponents": []
+        },
+        {
+          "span": "4",
+          "height": "12",
+          "properties": {},
+          "rows": [
+            {
+              "height": "12",
+              "properties": {},
+              "layoutColumns": [
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.uberfire.ext.plugin.client.perspective.editor.layout.editor.HTMLLayoutDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "HTML_CODE": "\u003cspan style\u003d\"font-size: large;\"\u003eProcesses By Version\u003c/span\u003e",
+                        "height": "80px"
+                      },
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "span": "12",
+                  "height": "6",
+                  "properties": {},
+                  "rows": [],
+                  "layoutComponents": [
+                    {
+                      "dragTypeName": "org.dashbuilder.client.editor.PieChartDragComponent",
+                      "properties": {
+                        "background-color": "#ffffff",
+                        "json": "{\n  \"uuid\": \"gwt-uid-2003\",\n  \"type\": \"PIECHART\",\n  \"subtype\": \"DONUT\",\n  \"general\": {\n    \"title\": \"Population per Continent\",\n    \"visible\": \"false\"\n  },\n  \"chart\": {\n    \"width\": \"300\",\n    \"height\": \"220\",\n    \"margin\": {\n      \"top\": \"10\",\n      \"bottom\": \"10\",\n      \"left\": \"10\",\n      \"right\": \"100\"\n    },\n    \"legend\": {\n      \"show\": \"true\",\n      \"position\": \"RIGHT\"\n    },\n    \"3d\": \"true\"\n  },\n  \"filter\": {\n    \"enabled\": \"true\",\n    \"selfapply\": \"false\",\n    \"notification\": \"true\",\n    \"listening\": \"true\"\n  },\n  \"dataSetLookup\": {\n    \"dataSetUuid\": \"PUBLIC_jbpmProcessInstances\",\n    \"rowCount\": \"-1\",\n    \"rowOffset\": \"0\",\n    \"groupOps\": [\n      {\n        \"columnGroup\": {\n          \"source\": \"processVersion\",\n          \"column\": \"processVersion\",\n          \"groupStrategy\": \"DYNAMIC\",\n          \"maxIntervals\": \"15\",\n          \"emptyIntervals\": \"false\",\n          \"asc\": \"true\",\n          \"firstMonthOfYear\": \"JANUARY\",\n          \"firstDayOfWeek\": \"MONDAY\"\n        },\n        \"groupFunctions\": [\n          {\n            \"source\": \"processVersion\",\n            \"column\": \"processVersion\"\n          },\n          {\n            \"source\": \"processInstanceId\",\n            \"column\": \"processInstanceId\",\n            \"function\": \"COUNT\"\n          }\n        ],\n        \"join\": \"false\"\n      }\n    ]\n  }\n}"
+                      },
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "layoutComponents": []
+        }
+      ]
+    }
+  ]
+}

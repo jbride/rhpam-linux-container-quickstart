@@ -1,0 +1,14 @@
+{
+  "uuid": "PUBLIC_processesMonitoring",
+  "name": "PUBLIC processesMonitoring",
+  "provider": "SQL",
+  "isPublic": true,
+  "cacheEnabled": false,
+  "cacheMaxRows": 1000,
+  "pushEnabled": false,
+  "pushMaxSize": 1024,
+  "refreshAlways": false,
+  "dataSource": "java:jboss/datasources/jbpmdb",
+  "dbSQL": "select log.processInstanceId, log.processId, log.start_date, log.end_date, log.status, log.duration, log.user_identity, log.processVersion, log.processName, log.externalId from ProcessInstanceLog log",
+  "allColumns": true
+}

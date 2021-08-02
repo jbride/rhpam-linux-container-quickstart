@@ -1,0 +1,14 @@
+{
+  "uuid": "PUBLIC_jbpmHumanTasksWithVariables",
+  "name": "PUBLIC jbpmHumanTasksWithVariables",
+  "provider": "SQL",
+  "isPublic": true,
+  "cacheEnabled": false,
+  "cacheMaxRows": 1000,
+  "pushEnabled": false,
+  "pushMaxSize": 1024,
+  "refreshAlways": false,
+  "dataSource": "java:jboss/datasources/jbpmdb",
+  "dbSQL": "select tvi.taskId, tvi.name, tvi.value from TaskVariableImpl tvi",
+  "allColumns": true
+}

@@ -1,0 +1,14 @@
+{
+  "uuid": "PUBLIC_jbpmProcessInstanceLogs",
+  "name": "PUBLIC jbpmProcessInstanceLogs",
+  "provider": "SQL",
+  "isPublic": true,
+  "cacheEnabled": false,
+  "cacheMaxRows": 1000,
+  "pushEnabled": false,
+  "pushMaxSize": 1024,
+  "refreshAlways": false,
+  "dataSource": "java:jboss/datasources/jbpmdb",
+  "dbSQL": "select log.id, log.nodeId, log.nodeName, log.nodeType, log.externalId, log.processInstanceId, log.log_date, log.connection, log.type, log.workItemId, log.referenceId, log.nodeContainerId, log.sla_due_date, log.slaCompliance from NodeInstanceLog log ",
+  "allColumns": true
+}

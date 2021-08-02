@@ -1,0 +1,40 @@
+{
+  "uuid": "88cace41-a0a2-4967-a9b3-6c699f1215fa",
+  "name": "Count Nodes Instances",
+  "provider": "SQL",
+  "isPublic": true,
+  "cacheEnabled": false,
+  "cacheMaxRows": 1000,
+  "pushEnabled": false,
+  "pushMaxSize": 1024,
+  "refreshAlways": false,
+  "dataSource": "java:jboss/datasources/jbpmdb",
+  "dbSQL": "select\n   pil.externalId,\n   pil.processId,\n    nodeid,\n    nodetype,\n    nodename,\n    count(nodeid) as total_hits\nfrom\nNodeInstanceLog nil\ninner join\n     ProcessInstanceLog pil on pil.processInstanceId = nil.processinstanceid\ngroup by \n     pil.externalId,\n     pil.processId,\n     nodeid,\n     nodename\n",
+  "allColumns": false,
+  "columns": [
+    {
+      "id": "externalId",
+      "type": "label"
+    },
+    {
+      "id": "processId",
+      "type": "label"
+    },
+    {
+      "id": "nodeid",
+      "type": "label"
+    },
+    {
+      "id": "nodetype",
+      "type": "label"
+    },
+    {
+      "id": "nodename",
+      "type": "label"
+    },
+    {
+      "id": "total_hits",
+      "type": "number"
+    }
+  ]
+}
