@@ -1,6 +1,6 @@
 == Purpose
 
-This project rovides a RH-PAM KieServer embedded in SpringBoot.
+This project provides a RH-PAM KieServer embedded in SpringBoot.
 It includes a pre-configured _KIE Container_ that manages the _mortgages_ KIE jar.
 
 The resultant _Kie Container_  is then packaged into an immutable Linux container.
