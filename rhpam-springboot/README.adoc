@@ -88,6 +88,13 @@ $ curl -X GET -H 'Accpet:application/json' localhost:8080/rest/server/queries/ta
 $ curl -v -X POST -H 'Content-type:application/json' \
         localhost:8080/rest/server/containers/handling-wih-exception/processes/handling_wih_exception.MainProcess/instances \
         -d "{\"input\":\"TIMER\"}"
+-----
+
+. Start a business process that throws a WorkItemHandlerRuntimeException that is caught by an Intermediary Catch Event
++
+-----
+$ curl -v -X POST -H 'Content-type:application/json' \
+        localhost:8080/rest/server/containers/handling-wih-exception/processes/handling_wih_exception.BoundaryEventExceptionHandling/instances
 
 -----
 

@@ -19,6 +19,15 @@
       <version>${version.org.kie}</version>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <!-- Needed to support use of: org.jbpm.process.workitem.core.AbstractLogOrThrowWorkItemHandler -->
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-workitems-core</artifactId>
+      <version>${version.org.kie}</version>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

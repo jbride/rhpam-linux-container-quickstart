@@ -106,6 +106,16 @@
     ],
     "displayName" : "ThrowProcessWIHExceptionTimer",
     "icon" : "defaultservicenodeicon.png"
+  ],
+  [
+    "name" : "ThrowWIHRuntimeException",
+    "parameters" : [
+        "throwException" : new StringDataType()
+    ],
+    "results" : [
+    ],
+    "displayName" : "ThrowWIHRuntimeException",
+    "icon" : "defaultservicenodeicon.png"
   ]
 
 ]
