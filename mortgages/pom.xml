@@ -12,7 +12,7 @@
   <name>Mortgages</name>
   <description>Loan approval process automation using Drools.</description>
   <properties>
-    <version.org.kie>7.48.0.Final-redhat-00006</version.org.kie>
+    <version.org.kie>7.52.0.Final-redhat-00008</version.org.kie>
   </properties>
 
   <dependencies>

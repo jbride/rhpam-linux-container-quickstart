@@ -9,7 +9,7 @@
   <name>handling-wih-exception</name>
   <description>A sample project that illustrates how to handle work item handler exceptions</description>
   <properties>
-    <version.org.kie>7.48.0.Final-redhat-00006</version.org.kie>
+    <version.org.kie>7.52.0.Final-redhat-00008</version.org.kie>
   </properties>
 
   <dependencies>
