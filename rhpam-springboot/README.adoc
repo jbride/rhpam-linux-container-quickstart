@@ -42,7 +42,7 @@ $ buildah bud -f docker/rhpam-springboot/Dockerfile \
 . Start pod with _postgresql_ and _rhpam-springboot_ linux containers:
 +
 -----
-$ podman-compose -f etc/docker-compose.yaml up -d
+$ docker-compose -f etc/docker-compose.yaml up -d
 -----
 
 == Test

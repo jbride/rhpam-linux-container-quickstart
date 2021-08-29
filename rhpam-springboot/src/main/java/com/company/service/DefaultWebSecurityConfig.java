@@ -16,16 +16,22 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Configuration("kieServerSecurity")
 @EnableWebSecurity
 public class DefaultWebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final Logger logger = LoggerFactory.getLogger("RESTController");
 
     @Value("${basic.auth.rhpam.admin.passwd}")
     private String adminPasswd;
 
     @Value("${basic.auth.rhpam.kieserver.passwd}")
     private String kieServerPasswd;
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

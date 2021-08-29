@@ -50,22 +50,22 @@ services:
 #    depends_on:
 #      - psql_rhpam
 
-  dbuilder_runtime:
-    image: quay.io/redhat_naps_da/dashbuilder-runtime-psql:7.54.0.Final-6
-    restart: always
-    ports:
-      - "8280:8280"
-      - "10190:10190"
-    environment:
-      JAVA_OPTS: '$JAVA_OPTS -Dfile.encoding=UTF-8 -Ddashbuilder.components.dir=/opt/runtime/components -Ddashbuilder.import.base.dir=/opt/dashbuilder/ -Ddashbuilder.runtime.import=/opt/dashbuilder/models/rhpam_default_reports.zip -Djboss.socket.binding.port-offset=200'
-      LANG: en_US.UTF-8
-      DB_CONNECTION_URL: jdbc:postgresql://localhost:5432/rhpam
-      DB_USER: rhpam
-      DB_PASSWORD: rhpam
-    user: jboss:root
-    volumes:
-      - ./dbuilder-runtime/modules/system/layers/base/org/postgresql/main/:/opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main:z
-      - ./dbuilder-runtime/dashbuilder/models:/opt/dashbuilder/models:z
-    depends_on:
-      - psql_rhpam
+#  dbuilder_runtime:
+#    image: quay.io/redhat_naps_da/dashbuilder-runtime-psql:7.54.0.Final-6
+#    restart: always
+#    ports:
+#      - "8280:8280"
+#      - "10190:10190"
+#    environment:
+#      JAVA_OPTS: '$JAVA_OPTS -Dfile.encoding=UTF-8 -Ddashbuilder.components.dir=/opt/runtime/components -Ddashbuilder.import.base.dir=/opt/dashbuilder/ -Ddashbuilder.runtime.import=/opt/dashbuilder/models/rhpam_default_reports.zip -Djboss.socket.binding.port-offset=200'
+#      LANG: en_US.UTF-8
+#      DB_CONNECTION_URL: jdbc:postgresql://localhost:5432/rhpam
+#      DB_USER: rhpam
+#      DB_PASSWORD: rhpam
+#    user: jboss:root
+#    volumes:
+#      - ./dbuilder-runtime/modules/system/layers/base/org/postgresql/main/:/opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main:z
+#      - ./dbuilder-runtime/dashbuilder/models:/opt/dashbuilder/models:z
+#    depends_on:
+#      - psql_rhpam
 

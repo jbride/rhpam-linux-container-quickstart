@@ -1,12 +1,17 @@
 package com.company.service;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.jbpm.services.api.ProcessService;
 import org.jbpm.services.api.RuntimeDataService;
 import org.jbpm.services.api.model.VariableDesc;
+import org.kie.api.executor.CommandContext;
+import org.kie.api.executor.ExecutorService;
 import org.kie.internal.KieInternalServices;
 import org.kie.internal.process.CorrelationKey;
 import org.kie.internal.process.CorrelationKeyFactory;
@@ -39,6 +44,9 @@ public class ProcessEngineExtension {
     private RuntimeDataService rDataService;
 
     @Autowired
+    private ExecutorService eService;
+
+    @Autowired
     private PlatformTransactionManager transactionManager;
 
     @Value("${com.redhat.naps.exceptionHandling.deployment.id}")
@@ -46,6 +54,21 @@ public class ProcessEngineExtension {
 
     @Value("${com.redhat.naps.exceptionHandling.process.id}")
     private String processId;
+
+    @Value("${com.redhat.naps.helloExecutorCommand.nextScheduleTimeAdd.millis}")
+    private String nextScheduleTimeAdd;
+
+    @PostConstruct
+    public void init() {
+        log.info("init() HelloExecutorCommand will execute the following # of millis: "+nextScheduleTimeAdd);
+        System.setProperty("com.redhat.naps.helloExecutorCommand.nextScheduleTimeAdd.millis", nextScheduleTimeAdd);
+        String commandName = "com.company.service.commands.HelloExecutorCommand";
+        Calendar commandStartTime = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
+        commandStartTime.add(Calendar.SECOND, 15);
+        CommandContext ctx = new CommandContext();
+        eService.scheduleRequest(commandName, commandStartTime.getTime(), ctx);
+
+    }
 
     // Example: curl -X POST "localhost:8080/custom/processes/startAndReturnVars?correlationKey=azra&input=HT" | jq .
     @Transactional
