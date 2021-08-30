@@ -82,6 +82,21 @@ $ curl -v -X POST -H 'Content-type:application/json' \
 $ curl -X GET -H 'Accpet:application/json' localhost:8080/rest/server/queries/tasks/instances/process/{processInstanceId_of_subprocess}
 -----
 
+
+. Start and Signal ExecutorSample business process
++
+-----
+# select status, commandname, deploymentid, executions, message, processinstanceid, timestamp from requestinfo;
+
+$ curl -v -X POST -H 'Content-type:application/json'         localhost:8080/rest/server/containers/handling-wih-exception/processes/ExecutorSample/instances
+$ curl -v -X POST -H 'Content-type:application/json'         localhost:8080/rest/server/containers/handling-wih-exception/processes/SimpleSignal/instances
+
+$ curl -v -X GET localhost:8080/rest/server/containers/handling-wih-exception/processes/instances/1/signals
+
+$ curl -v -X POST -H 'Content-type:application/json' \
+        localhost:8080/rest/server/containers/handling-wih-exception/processes/instances/1/signal/testSignal
+-----
+
 . Start a business process that throws a ProcessWIHException that retries a subprocess with timer 
 +
 -----

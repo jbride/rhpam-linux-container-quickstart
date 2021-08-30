@@ -116,6 +116,17 @@
     ],
     "displayName" : "ThrowWIHRuntimeException",
     "icon" : "defaultservicenodeicon.png"
+  ],
+  [
+    "name" : "ExecutorWIH",
+    "parameters" : [
+        "signal" : new StringDataType()
+        "deploymentId" : new StringDataType()
+    ],
+    "results" : [
+    ],
+    "displayName" : "ExecutorWIH",
+    "icon" : "defaultservicenodeicon.png"
   ]
 
 ]

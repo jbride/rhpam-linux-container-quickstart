@@ -74,7 +74,7 @@ public class ProcessEngineExtension {
         Calendar commandStartTime = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
         commandStartTime.add(Calendar.SECOND, 15);
         CommandContext ctx = new CommandContext();
-        eService.scheduleRequest(commandName, commandStartTime.getTime(), ctx);
+        //eService.scheduleRequest(commandName, commandStartTime.getTime(), ctx);
 
         //EntityManager jbpmEM = EntityManagerFactoryManager.get().getOrCreate("org.jbpm.domain").createEntityManager();
         Query testQuery = jbpmEM.createNativeQuery("select count(status) from requestinfo");
