@@ -1,12 +1,17 @@
 package com.company.service;
 
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
+import org.jbpm.runtime.manager.impl.jpa.EntityManagerFactoryManager;
 import org.jbpm.services.api.ProcessService;
 import org.jbpm.services.api.RuntimeDataService;
 import org.jbpm.services.api.model.VariableDesc;
@@ -49,6 +54,9 @@ public class ProcessEngineExtension {
     @Autowired
     private PlatformTransactionManager transactionManager;
 
+    @PersistenceContext(unitName = "org.jbpm.domain")
+    EntityManager jbpmEM;
+
     @Value("${com.redhat.naps.exceptionHandling.deployment.id}")
     private String deploymentId;
 
@@ -68,6 +76,10 @@ public class ProcessEngineExtension {
         CommandContext ctx = new CommandContext();
         eService.scheduleRequest(commandName, commandStartTime.getTime(), ctx);
 
+        //EntityManager jbpmEM = EntityManagerFactoryManager.get().getOrCreate("org.jbpm.domain").createEntityManager();
+        Query testQuery = jbpmEM.createNativeQuery("select count(status) from requestinfo");
+        BigInteger jobCount = (BigInteger)testQuery.getSingleResult();
+        log.info("init() current executor job count = "+jobCount.intValue());
     }
 
     // Example: curl -X POST "localhost:8080/custom/processes/startAndReturnVars?correlationKey=azra&input=HT" | jq .
