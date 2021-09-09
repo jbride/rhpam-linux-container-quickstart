@@ -44,6 +44,29 @@ Simple KJar example with various business processes and WorkItemHandlers that he
 .. Starting a synchroneous business process (with no wait states) and returning the modified process variables to the invoking client
 
 
+== Local containerized environment
+
+This project includes a _docker-compose_ config file that allows for deployment of the application as containers in your local environment.
+
+. Start application pod with all linux containers:
++
+-----
+$ docker-compose -f etc/docker-compose.yaml up -d
+-----
++
+NOTE:  If underlying linux container system in use in your local environment is podman, then follow this link:https://fedoramagazine.org/use-docker-compose-with-podman-to-orchestrate-containers-on-fedora/[set-up guide].
+
+. The following diagram depicts the containers instantiated as part of this pod:
++
+image::docs/images/docker-compose-architecture.png[]
+
+. Disable SSL requirement for master realm:
++
+-----
+$ podman exec -it etc_psql_sso_1 psql sso -c "update REALM set ssl_required='NONE' where id = 'master'"
+-----
+
+
 
 == Reference
 
