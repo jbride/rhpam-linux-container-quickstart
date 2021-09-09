@@ -43,16 +43,16 @@
       <containerAlias>mortgages</containerAlias>
     </container>
     <container>
-      <containerId>handling-wih-exception-0.0.1</containerId>
+      <containerId>bpmn-examples-0.0.1</containerId>
       <releaseId>
         <groupId>com.redhat.naps</groupId>
-        <artifactId>handling-wih-exception</artifactId>
+        <artifactId>bpmn-examples</artifactId>
         <version>0.0.1</version>
       </releaseId>
       <status>STARTED</status>
       <configItems/>
       <messages/>
-      <containerAlias>handling-wih-exception</containerAlias>
+      <containerAlias>bpmn-examples</containerAlias>
     </container>
   </containers>
 </kie-server-state>

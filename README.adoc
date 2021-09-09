@@ -33,7 +33,7 @@ It includes a pre-configured _KIE Container_ that manages the _mortgages_ KIE ja
 +
 The resultant _Kie Container_  is then packaged into an immutable Linux container.
 
-. *handling-wih-exception*
+. *bpmn-examples*
 +
 Simple KJar example with various business processes and WorkItemHandlers that help to highlight the following: 
 

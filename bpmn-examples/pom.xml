@@ -3,10 +3,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.redhat.naps</groupId>
-  <artifactId>handling-wih-exception</artifactId>
+  <artifactId>bpmn-examples</artifactId>
   <version>0.0.1</version>
   <packaging>kjar</packaging>
-  <name>handling-wih-exception</name>
+  <name>bpmn-examples</name>
   <description>A sample project that illustrates how to handle work item handler exceptions</description>
   <properties>
     <version.org.kie>7.52.0.Final-redhat-00008</version.org.kie>

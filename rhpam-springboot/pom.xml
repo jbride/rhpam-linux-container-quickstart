@@ -23,7 +23,7 @@
     <fabric8.version>3.5.40</fabric8.version>
     <cxf.version>3.2.14</cxf.version>
     <version.mortgages.kjar>0.0.1</version.mortgages.kjar>
-    <version.handling-wih-exception.kjar>0.0.1</version.handling-wih-exception.kjar>
+    <version.bpmn-examples.kjar>0.0.1</version.bpmn-examples.kjar>
   </properties>
 
   <dependencies>
@@ -35,8 +35,8 @@
     </dependency>
     <dependency>
       <groupId>com.redhat.naps</groupId>
-      <artifactId>handling-wih-exception</artifactId>
-      <version>${version.handling-wih-exception.kjar}</version>
+      <artifactId>bpmn-examples</artifactId>
+      <version>${version.bpmn-examples.kjar}</version>
     </dependency>
 
     
@@ -117,17 +117,17 @@
             </artifactItem>
             <artifactItem>
               <groupId>com.redhat.naps</groupId>
-              <artifactId>handling-wih-exception</artifactId>
-              <version>${version.handling-wih-exception.kjar}</version>
+              <artifactId>bpmn-examples</artifactId>
+              <version>${version.bpmn-examples.kjar}</version>
               <type>jar</type>
-              <outputDirectory>${project.build.directory}/repository/com/redhat/naps/handling-wih-exception/${version.handling-wih-exception.kjar}</outputDirectory>
+              <outputDirectory>${project.build.directory}/repository/com/redhat/naps/bpmn-examples/${version.bpmn-examples.kjar}</outputDirectory>
             </artifactItem>
             <artifactItem>
               <groupId>com.redhat.naps</groupId>
-              <artifactId>handling-wih-exception</artifactId>
-              <version>${version.handling-wih-exception.kjar}</version>
+              <artifactId>bpmn-examples</artifactId>
+              <version>${version.bpmn-examples.kjar}</version>
               <type>pom</type>
-              <outputDirectory>${project.build.directory}/repository/com/redhat/naps/handling-wih-exception/${version.handling-wih-exception.kjar}</outputDirectory>
+              <outputDirectory>${project.build.directory}/repository/com/redhat/naps/bpmn-examples/${version.bpmn-examples.kjar}</outputDirectory>
             </artifactItem>
           </artifactItems>
         </configuration>

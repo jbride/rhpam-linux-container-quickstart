@@ -16,7 +16,7 @@ NOTE: The following commands make use of _podman_, _buildah_ and _podman_compose
 -----
 -----
 
-. Build _handling-wih-exception_ 
+. Build _bpmn-examples_ 
 +
 -----
 -----
@@ -69,14 +69,14 @@ $ curl -u "kieserver:kieserver" -X GET http://localhost:8080/rest/server/contain
 . List process definitions in JSON representation:
 +
 -----
-$ curl -u "kieserver:kieserver" -X GET -H 'Accept:application/json' localhost:8080/rest/server/containers/handling-wih-exception/processes/
+$ curl -u "kieserver:kieserver" -X GET -H 'Accept:application/json' localhost:8080/rest/server/containers/bpmn-examples/processes/
 -----
 
 . Start a business process that throws a ProcessWIHException that delegates to a subprocess with human task
 +
 -----
 $ curl -v -X POST -H 'Content-type:application/json' \
-        localhost:8080/rest/server/containers/handling-wih-exception/processes/handling_wih_exception.MainProcess/instances \
+        localhost:8080/rest/server/containers/bpmn-examples/processes/handling_wih_exception.MainProcess/instances \
         -d "{\"input\":\"HT\"}"
 
 $ curl -X GET -H 'Accpet:application/json' localhost:8080/rest/server/queries/tasks/instances/process/{processInstanceId_of_subprocess}
@@ -88,20 +88,20 @@ $ curl -X GET -H 'Accpet:application/json' localhost:8080/rest/server/queries/ta
 -----
 # select status, commandname, deploymentid, executions, message, processinstanceid, timestamp from requestinfo;
 
-$ curl -v -X POST -H 'Content-type:application/json'         localhost:8080/rest/server/containers/handling-wih-exception/processes/ExecutorSample/instances
-$ curl -v -X POST -H 'Content-type:application/json'         localhost:8080/rest/server/containers/handling-wih-exception/processes/SimpleSignal/instances
+$ curl -v -X POST -H 'Content-type:application/json'         localhost:8080/rest/server/containers/bpmn-examples/processes/ExecutorSample/instances
+$ curl -v -X POST -H 'Content-type:application/json'         localhost:8080/rest/server/containers/bpmn-examples/processes/SimpleSignal/instances
 
-$ curl -v -X GET localhost:8080/rest/server/containers/handling-wih-exception/processes/instances/1/signals
+$ curl -v -X GET localhost:8080/rest/server/containers/bpmn-examples/processes/instances/1/signals
 
 $ curl -v -X POST -H 'Content-type:application/json' \
-        localhost:8080/rest/server/containers/handling-wih-exception/processes/instances/1/signal/testSignal
+        localhost:8080/rest/server/containers/bpmn-examples/processes/instances/1/signal/testSignal
 -----
 
 . Start a business process that throws a ProcessWIHException that retries a subprocess with timer 
 +
 -----
 $ curl -v -X POST -H 'Content-type:application/json' \
-        localhost:8080/rest/server/containers/handling-wih-exception/processes/handling_wih_exception.MainProcess/instances \
+        localhost:8080/rest/server/containers/bpmn-examples/processes/handling_wih_exception.MainProcess/instances \
         -d "{\"input\":\"TIMER\"}"
 -----
 
@@ -109,7 +109,7 @@ $ curl -v -X POST -H 'Content-type:application/json' \
 +
 -----
 $ curl -v -X POST -H 'Content-type:application/json' \
-        localhost:8080/rest/server/containers/handling-wih-exception/processes/handling_wih_exception.BoundaryEventExceptionHandling/instances
+        localhost:8080/rest/server/containers/bpmn-examples/processes/handling_wih_exception.BoundaryEventExceptionHandling/instances
 
 -----
 
