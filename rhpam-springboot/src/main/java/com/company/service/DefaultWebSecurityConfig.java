@@ -19,8 +19,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Configuration("kieServerSecurity")
-@EnableWebSecurity
+//@Configuration("kieServerSecurity")
+//@EnableWebSecurity
 public class DefaultWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger("RESTController");
