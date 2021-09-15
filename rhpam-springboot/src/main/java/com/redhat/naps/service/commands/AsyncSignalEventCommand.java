@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.company.service.commands;
+package com.redhat.naps.service.commands;
 
 import org.kie.api.executor.Command;
 import org.kie.api.executor.CommandContext;

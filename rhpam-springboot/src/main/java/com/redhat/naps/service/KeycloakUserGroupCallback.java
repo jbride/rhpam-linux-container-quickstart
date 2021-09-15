@@ -1,8 +1,14 @@
-package com.company.service;
+package com.redhat.naps.service;
 
 import java.util.List;
-import java.util.Arrays;
+import java.util.Set;
 
+import com.redhat.naps.service.utils.Util;
+
+import java.util.Arrays;
+import java.util.HashSet;
+
+import org.apache.commons.lang3.StringUtils;
 import org.jbpm.springboot.security.SpringSecurityIdentityProvider;
 import org.kie.api.task.UserGroupCallback;
 import org.kie.internal.identity.IdentityProvider;
@@ -19,23 +25,35 @@ import org.slf4j.LoggerFactory;
 public class KeycloakUserGroupCallback implements UserGroupCallback {
 
     private final static Logger log = LoggerFactory.getLogger(KeycloakUserGroupCallback.class);
+    
+    private Set<String> availableGroups = new HashSet<String>();
 
     private SpringSecurityIdentityProvider provider;
 
     public KeycloakUserGroupCallback(IdentityProvider x) {
 
         this.provider = (SpringSecurityIdentityProvider)x;
-        log.info("constructor() provider = "+provider);
+
+        String groups = System.getProperty(Util.AVAILABLE_SSO_GROUPS);
+        System.out.println("groups = "+groups);
+        if(StringUtils.isNotEmpty(groups)){
+            String[] gArray = groups.split(",");
+            for(String group : gArray){
+                availableGroups.add(group);
+            }
+        }
+        log.info("constructor() provider = "+provider+ " :  # of groups = "+availableGroups.size());
     }
 
     @Override
     // When a task is created, verify that groupIds / roles assigned to that task are actually registered in Identity Provider
     public boolean existsGroup(String groupId) {
+        /*StackTraceElement[] sTraceArray = new Throwable().getStackTrace();
+        for(StackTraceElement sTrace : sTraceArray){
+            System.out.println(sTrace.toString());
+        }*/
         log.info("existsGroup() group = "+groupId);
-        if (groupId.equals("Administrators") || groupId.equals("interviewer"))
-            return true;
-        else
-            return false;
+        return availableGroups.contains(groupId);
     }
 
     @Override
@@ -49,8 +67,12 @@ public class KeycloakUserGroupCallback implements UserGroupCallback {
     }
 
     @Override
-    // List all roles associated with an authenticated user attempting to manage tasks
+    // Return all roles associated with an authenticated user attempting to manage tasks
     public List<String> getGroupsForUser(String userId) {
+        /*StackTraceElement[] sTraceArray = new Throwable().getStackTrace();
+        for(StackTraceElement sTrace : sTraceArray){
+            System.out.println(sTrace.toString());
+        }*/
         List<String> groupList = provider.getRoles();
         log.info("getGroupsForUser "+userId+" : " + Arrays.toString(groupList.toArray()));
         return groupList;

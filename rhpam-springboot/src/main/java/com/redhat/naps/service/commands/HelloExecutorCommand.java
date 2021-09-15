@@ -1,4 +1,4 @@
-package com.company.service.commands;
+package com.redhat.naps.service.commands;
 
 
 import java.util.Date;

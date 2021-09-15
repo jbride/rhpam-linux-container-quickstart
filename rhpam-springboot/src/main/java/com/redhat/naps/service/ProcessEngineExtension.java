@@ -1,4 +1,4 @@
-package com.company.service;
+package com.redhat.naps.service;
 
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -35,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.redhat.naps.service.utils.Util;
+
 @RestController
 @RequestMapping("/custom/processes")
 public class ProcessEngineExtension {
@@ -66,11 +68,12 @@ public class ProcessEngineExtension {
     @Value("${com.redhat.naps.helloExecutorCommand.nextScheduleTimeAdd.millis}")
     private String nextScheduleTimeAdd;
 
+
     @PostConstruct
     public void init() {
         log.info("init() HelloExecutorCommand will execute the following # of millis: "+nextScheduleTimeAdd);
-        System.setProperty("com.redhat.naps.helloExecutorCommand.nextScheduleTimeAdd.millis", nextScheduleTimeAdd);
-        String commandName = "com.company.service.commands.HelloExecutorCommand";
+        System.setProperty(Util.NEXT_SCHEDULED_TIME, nextScheduleTimeAdd);
+        String commandName = "com.redhat.naps.service.commands.HelloExecutorCommand";
         Calendar commandStartTime = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
         commandStartTime.add(Calendar.SECOND, 15);
         CommandContext ctx = new CommandContext();
@@ -80,6 +83,7 @@ public class ProcessEngineExtension {
         Query testQuery = jbpmEM.createNativeQuery("select count(status) from requestinfo");
         BigInteger jobCount = (BigInteger)testQuery.getSingleResult();
         log.info("init() current executor job count = "+jobCount.intValue());
+
     }
 
     // Example: curl -X POST "localhost:8080/custom/processes/startAndReturnVars?correlationKey=azra&input=HT" | jq .

@@ -1,8 +1,8 @@
-package com.company.service.wih;
+package com.redhat.naps.service.wih;
 
 import java.util.Calendar;
 
-import com.company.service.commands.AsyncSignalEventCommand;
+import com.redhat.naps.service.commands.AsyncSignalEventCommand;
 
 //import org.jbpm.process.core.async.AsyncSignalEventCommand;
 import org.kie.api.executor.CommandContext;

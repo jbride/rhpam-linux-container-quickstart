@@ -1,4 +1,4 @@
-package com.company.service;
+package com.redhat.naps.service;
 
 import java.util.Arrays;
 

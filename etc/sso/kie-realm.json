@@ -906,7 +906,7 @@
             "http://localhost:9080/*"
          ],
          "webOrigins":[
-            "http://localhost:9080/*"
+            "+"
 
          ],
          "notBefore":0,

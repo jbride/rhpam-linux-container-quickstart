@@ -1,6 +1,8 @@
-package com.company.service;
+package com.redhat.naps.service;
 
-import java.util.Arrays;
+import javax.annotation.PostConstruct;
+
+import com.redhat.naps.service.utils.Util;
 
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
@@ -9,9 +11,9 @@ import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurer
 import org.kie.api.task.UserGroupCallback;
 import org.kie.internal.identity.IdentityProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,11 +21,6 @@ import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-
-
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +30,16 @@ import org.slf4j.LoggerFactory;
 public class KeycloakWebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     private final static Logger log = LoggerFactory.getLogger(KeycloakWebSecurityConfig.class);
+
+    @Value("${com.redhat.naps.sso.available.groups}")
+    private String availableGroups;
+
+    @PostConstruct
+    public void init() {
+        // System property gets picked up by this project's KeycloakUserGroupCallback
+        System.setProperty(Util.AVAILABLE_SSO_GROUPS, availableGroups);
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

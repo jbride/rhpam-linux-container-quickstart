@@ -31,7 +31,7 @@
         </work-item-handler>
         <work-item-handler>
             <resolver>mvel</resolver>
-            <identifier>new com.company.service.wih.ExecutorWIH()</identifier>
+            <identifier>new com.redhat.naps.service.wih.ExecutorWIH()</identifier>
             <parameters>
             </parameters>
             <name>ExecutorWIH</name>

@@ -25,31 +25,48 @@ Deployments of _kie-containers_ to the Kie-server are not done via a _kie-contro
 +
 Instead, the _kie-container_ jar file is built into the linux container image and referenced in an XML based _kie-controller_ configuration file (also baked into the linux container image)
 
+. Kie-server along with Task lifecycle management is secured using RH-SSO  (in particular:  OpenID Connect)
+
+. Expose a custom API that is capabile of starting a synchroneous business process (with no wait states) and returning the modified process variables to the invoking client
+
 == Overview
-There are two sub-projects included.  
-Read the docs and execute each of them in the following order:
+There are several sub-projects included.
 
 . *mortgages*
 +
 Simple KJar example with business rules.
 Plagarized from:  https://github.com/kiegroup/kie-wb-playground/tree/master/mortgages
 
-. *rhpam-springboot*
-+
-This project provides a RH-PAM KieServer embedded in SpringBoot.
-It includes a pre-configured _KIE Container_ that manages the _mortgages_ KIE jar.
-+
-The resultant _Kie Container_  is then packaged into an immutable Linux container.
 
 . *bpmn-examples*
 +
 Simple KJar example with various business processes and WorkItemHandlers that help to highlight the following: 
 
-.. Manage lifecycle of long running business processes via KIE-Server RESTful API of RH-PAM embedded in SpringBoot.
+.. exception handling sample
++
+Provides examples of exception handling in a business process using the various strategies of RH-PAM's ProcessWorkItemHandlerException functionality
 
-.. Exception handling in a business process using the various strategies of RH-PAM's ProcessWorkItemHandlerException functionality
+... *DealWithExceptionViaHT*
+... *DealWithExceptionViaTimer*
+... *BoundaryEventExceptionHandling*
 
-.. Starting a synchroneous business process (with no wait states) and returning the modified process variables to the invoking client
+
+
+.. *Simple Signal*
+
+.. *Executor Sample*
+
+.. *Simple Task*
++
+Business process with a simple human task.  Used to demonstrate SSO enabled _UserGroupCallback_.
+
+
+. *rhpam-springboot*
++
+This project provides a RH-PAM KieServer embedded in SpringBoot.
+It includes a pre-configured _KIE Container_ that manages the _mortgages_ and _bpmn-examples_ KIE jars.
++
+The resultant _Kie Container_  is then packaged into an immutable Linux container.
 
 
 == Local Containerized Environment
@@ -64,13 +81,15 @@ $ docker-compose -f etc/docker-compose.yaml up -d
 +
 NOTE:  If underlying linux container system in use in your local environment is podman, then follow this link:https://fedoramagazine.org/use-docker-compose-with-podman-to-orchestrate-containers-on-fedora/[set-up guide].
 
-. Disable SSL requirement for master realm:
+. Log into _master_ realm of RH-SSO
+
+.. Disable SSL requirement for master realm:
 +
 -----
 $ podman exec -it etc_psql_sso_1 psql sso -c "update REALM set ssl_required='NONE' where id = 'master'"
 -----
 
-. Log into _master_ realm of RH-SSO at http://localhost:8080 using credentials of:  master / master
+.. Log into _master_ realm of RH-SSO at http://localhost:8080 using credentials of:  master / master
 
 . Log into _kieRealm_ at http://localhost:8080/auth/admin/kieRealm/console using credentials of:  ssoRealmAdmin / pam
 
@@ -80,14 +99,6 @@ $ podman exec -it etc_psql_sso_1 psql sso -c "update REALM set ssl_required='NON
 $ docker-compose -f etc/docker-compose.yaml down
 -----
 
-=== SSO
-
-. Themes
-+
------
-https://robferguson.org/blog/2020/04/12/keycloak-themes-part-1/
-https://www.keycloak.org/docs/latest/server_development/#default-themes
------
 
 == Test
 
@@ -143,10 +154,10 @@ $ curl -v \
 . Check CORS headers using a _preflight_ request:
 +
 -----
-$ curl -i -X OPTIONS -H "Origin: http://localhost:7080" \
+$ curl -i -X OPTIONS -H "Origin: http://localhost:8080" \
     -H 'Access-Control-Request-Method: POST' \
     -H 'Access-Control-Request-Headers: Content-Type, Authorization' \
-    "$kieserver_hostname/rest/server"
+    "$retrieve_token_url"
 
 HTTP/1.1 200 
 Vary: Origin
@@ -157,14 +168,7 @@ Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,PUT,OPTIONS
 Access-Control-Allow-Headers: Content-Type, Authorization
 Access-Control-Allow-Credentials: true
 Access-Control-Max-Age: 1800
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
 X-Frame-Options: DENY
-Content-Length: 0
-Date: Tue, 14 Sep 2021 18:01:45 GMT
 -----
 
 
@@ -399,6 +403,13 @@ $ mvn clean package -DskipTests && \
 
 
 == Reference
+
+. SSO Themes
+
+.. https://robferguson.org/blog/2020/04/12/keycloak-themes-part-1/
+.. https://www.keycloak.org/docs/latest/server_development/#default-themes
+
+
 
 . link:https://github.com/kiegroup/jbpm/tree/7.48.0.Final/jbpm-db-scripts/src/main/resources/db/ddl-scripts/postgresql[RH-PAM / PostgreSQL Schemas]
 +
