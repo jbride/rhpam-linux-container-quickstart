@@ -922,7 +922,7 @@
          "attributes":{
 
          },
-         "fullScopeAllowed":false,
+         "fullScopeAllowed":true,
          "nodeReRegistrationTimeout":0,
          "protocolMappers":[
             {

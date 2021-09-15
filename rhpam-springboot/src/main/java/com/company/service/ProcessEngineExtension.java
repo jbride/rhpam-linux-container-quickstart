@@ -57,10 +57,10 @@ public class ProcessEngineExtension {
     @PersistenceContext(unitName = "org.jbpm.domain")
     EntityManager jbpmEM;
 
-    @Value("${com.redhat.naps.exceptionHandling.deployment.id}")
+    @Value("${com.redhat.naps.bpmnexamples.deployment.id}")
     private String deploymentId;
 
-    @Value("${com.redhat.naps.exceptionHandling.process.id}")
+    @Value("${com.redhat.naps.bpmnexamples.process.id}")
     private String processId;
 
     @Value("${com.redhat.naps.helloExecutorCommand.nextScheduleTimeAdd.millis}")

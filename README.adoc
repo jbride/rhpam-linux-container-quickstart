@@ -116,6 +116,20 @@ echo $TKN
 eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJOd010SUpfRnFuY3BMODJSQWRJMkMxSklLcXJWUzlBRWVNSHM0RktRZi1BIn0.eyJleHAiOjE2MTA3NjEzMzUsImlhdCI6MTYxMDc2MTAzNSwianRpIjoiOGM1YzJlZTAtMmZmZi00MGFhLTg0MGYtZWE2N2MxYWViNWZjIiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay1yaC1zc28uYXBwcy5yaHRuY2twbWcucmhzbGVkb2NwLmNvbS9hdXRoL3JlYWxtcy9raWVSZWFsbSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiIzMmE4NjczNi04MThiLTRiM2MtODQyZi0zY2U4OGU3MjJkZGMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJraWUtc2VydmVyIiwic2Vzc2lvbl9zdGF0ZSI6Ijk0M2Y3NzRhLTgyOTItNDg1Mi04MmZkLWY2ZGNiMGU0NzQ0YiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cHM6Ly9yaHBhbS1raWVzZXJ2ZXItcmhwYW0tZGV2LW9uY29yZS5hcHBzLnJodG5ja3BtZy5yaHNsZWRvY3AuY29tOjQ0MyIsImh0dHBzOi8vcmhwYW0ta2llc2VydmVyLXJocGFtLWRldi1vbmNvcmUuYXBwcy5yaHRuY2twbWcucmhzbGVkb2NwLmNvbSJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsia2llbWdtdCIsImFkbWluIiwicmVzdC1hbGwiLCJBZG1pbmlzdHJhdG9ycyIsImtpZS1zZXJ2ZXIiLCJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJwYW1hZG1pbiIsImVtYWlsIjoicGFtYWRtaW5Ab3BlbnNoaWZ0Lm9wZW50bGMuY29tIn0.bmHT1R25G13c4CdYK2am-5-a-Y1QwRequsXg2C55fj7kdfBr8yJ7_qRrGQxQ4spy28f3O0vdtMc10O3h3HFTPZoCaGVqfciE4axcZI2zZLdVmc6qlmfLIj-hjZMqoOB-tAYyHcFoUN9mtQmJWhCaFO0JysCUpQHeOjssSizjjRHLW5Dsg5JHqZxR4iBuG-KBlfK-cI0ryeNQV5ljdP6nNn7UrEbhHP_rFyZlmHXgOAraL6MC75Rnra0nwIvg4Wu30WXppxT7HUlQj1lFBaZQUzmFXXJBXHBq_5ofNHgervMFtmyzlG_3r892e4JS1qZ7o4fDaXyMvD1RTa6WwKpC8g
 -----
 
+. By setting _fullScopeAllowed=true_ in SSO client, all roles assocated with an authenticated user will be included in the access token.
++
+These roles can be visualized as follows:
++
+-----
+$ jq -R 'split(".") | .[1] | @base64d | fromjson' <<< $TKN | jq .realm_access.roles
+
+[
+  "interviewer",
+  "kie-server",
+  "user"
+]
+-----
+
 . Using the OAuth2 token, invoke the kie-server to determine its current status:
 +
 -----
@@ -124,6 +138,33 @@ $ curl -v \
     -X GET \
     -H 'Accept:application/json' \
     $kieserver_hostname/rest/server
+-----
+
+. Check CORS headers using a _preflight_ request:
++
+-----
+$ curl -i -X OPTIONS -H "Origin: http://localhost:7080" \
+    -H 'Access-Control-Request-Method: POST' \
+    -H 'Access-Control-Request-Headers: Content-Type, Authorization' \
+    "$kieserver_hostname/rest/server"
+
+HTTP/1.1 200 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Access-Control-Allow-Origin: http://localhost:7080
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,PUT,OPTIONS
+Access-Control-Allow-Headers: Content-Type, Authorization
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 1800
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 0
+Date: Tue, 14 Sep 2021 18:01:45 GMT
 -----
 
 
@@ -139,6 +180,14 @@ $ curl -H "Authorization: Bearer $TKN" -H 'Accept:application/json' $kieserver_h
 $ curl -v -H "Authorization: Bearer $TKN" $kieserver_hostname/rest/swagger.json | jq .
 -----
 
+. View Swagger UI
++
+Point your browser to the output of the following:
++
+-----
+$ echo -en "\n$kieserver_hostname/rest/api-docs?url=$kieserver_hostname/rest/swagger.json\n"
+-----
+
 . List KIE Containers
 +
 -----
@@ -151,17 +200,44 @@ $ curl -H "Authorization: Bearer $TKN" -X GET $kieserver_hostname/rest/server/co
 $ curl -H "Authorization: Bearer $TKN" -X GET -H 'Accept:application/json' $kieserver_hostname/rest/server/containers/bpmn-examples/processes/
 -----
 
-. Start a business process that throws a ProcessWIHException that delegates to a subprocess with human task
-+
+=== Simple Task
+
 -----
 $ curl -v -X POST -H 'Content-type:application/json' \
         -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/containers/bpmn-examples/processes/SimpleTask/instances
+-----
+
+-----
+TKN=$(curl -X POST "$retrieve_token_url" \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "username=eve" \
+            -d "password=pam" \
+            -d "grant_type=password" \
+            -d "client_id=kie-server" \
+            | sed 's/.*access_token":"//g' | sed 's/".*//g')
+
+$ curl -v -X GET -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/queries/tasks/instances/pot-owners
+-----
+
+=== WIH Exceptions
+
+. Start a business process that throws a ProcessWIHException that delegates to a subprocess with human task
++
+-----
+$ pInstanceId=$( curl -v -X POST -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
         $kieserver_hostname/rest/server/containers/bpmn-examples/processes/handling_wih_exception.MainProcess/instances \
-        -d "{\"input\":\"HT\"}"
+        -d "{\"input\":\"HT\"}" \
+  ) 
+
+$ TO-DO:   get subprocess based on parent process
 
 $ curl -X GET -H "Authorization: Bearer $TKN" \
               -H 'Accpet:application/json' \
-              $kieserver_hostname/rest/server/queries/tasks/instances/process/{processInstanceId_of_subprocess}
+              $kieserver_hostname/rest/server/queries/tasks/instances/process/$pInstanceId
 -----
 
 
