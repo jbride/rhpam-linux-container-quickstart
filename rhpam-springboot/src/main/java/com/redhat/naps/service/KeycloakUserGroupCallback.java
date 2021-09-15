@@ -35,7 +35,6 @@ public class KeycloakUserGroupCallback implements UserGroupCallback {
         this.provider = (SpringSecurityIdentityProvider)x;
 
         String groups = System.getProperty(Util.AVAILABLE_SSO_GROUPS);
-        System.out.println("groups = "+groups);
         if(StringUtils.isNotEmpty(groups)){
             String[] gArray = groups.split(",");
             for(String group : gArray){
@@ -52,14 +51,14 @@ public class KeycloakUserGroupCallback implements UserGroupCallback {
         for(StackTraceElement sTrace : sTraceArray){
             System.out.println(sTrace.toString());
         }*/
-        log.info("existsGroup() group = "+groupId);
+        log.info("existsGroup() group = "+groupId+" = "+availableGroups.contains(groupId));
         return availableGroups.contains(groupId);
     }
 
     @Override
     // When a task is created, verify that userId assigned to task is actually registered in Identity Provider
     public boolean existsUser(String userId) {
-        log.info("Checking User : " + userId);
+        log.info("existsUser() : " + userId);
         if (userId.equals("kieserver") || userId.equals("wbadmin") || userId.equals("user") || userId.equals("Administrator"))
             return true;
         else
@@ -74,7 +73,7 @@ public class KeycloakUserGroupCallback implements UserGroupCallback {
             System.out.println(sTrace.toString());
         }*/
         List<String> groupList = provider.getRoles();
-        log.info("getGroupsForUser "+userId+" : " + Arrays.toString(groupList.toArray()));
+        log.info("getGroupsForUser() "+userId+"'s groups =  " + Arrays.toString(groupList.toArray()));
         return groupList;
     }
 

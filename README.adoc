@@ -189,7 +189,7 @@ $ curl -v -H "Authorization: Bearer $TKN" $kieserver_hostname/rest/swagger.json 
 Point your browser to the output of the following:
 +
 -----
-$ echo -en "\n$kieserver_hostname/rest/api-docs?url=$kieserver_hostname/rest/swagger.json\n"
+$ echo -en "\n$kieserver_hostname/rest/api-docs?url=http://$kieserver_hostname/rest/swagger.json\n"
 -----
 
 . List KIE Containers
@@ -206,12 +206,16 @@ $ curl -H "Authorization: Bearer $TKN" -X GET -H 'Accept:application/json' $kies
 
 === Simple Task
 
+. Start business process instance with human task:
++
 -----
 $ curl -v -X POST -H 'Content-type:application/json' \
         -H "Authorization: Bearer $TKN" \
         $kieserver_hostname/rest/server/containers/bpmn-examples/processes/SimpleTask/instances
 -----
 
+. Grab a JWT specific to the _eve_ user and query for human tasks:
++
 -----
 TKN=$(curl -X POST "$retrieve_token_url" \
             -H "Content-Type: application/x-www-form-urlencoded" \
