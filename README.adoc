@@ -105,7 +105,7 @@ $ docker-compose -f etc/docker-compose.yaml down
 . Set the following environment variables with values similar to the following:
 +
 -----
-rhsso_hostname=localhost:8080
+rhsso_hostname=localhost:4080
 kieserver_hostname=localhost:9080
 retrieve_token_url="http://$rhsso_hostname/auth/realms/kieRealm/protocol/openid-connect/token"
 -----
@@ -204,6 +204,17 @@ $ curl -H "Authorization: Bearer $TKN" -X GET $kieserver_hostname/rest/server/co
 $ curl -H "Authorization: Bearer $TKN" -X GET -H 'Accept:application/json' $kieserver_hostname/rest/server/containers/bpmn-examples/processes/
 -----
 
+=== Simple Data Object
+
+. Start business process instance with a data object:
++
+-----
+$ curl -v -X POST -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/containers/bpmn-examples/processes/SimpleDataObject/instances \
+        -d '{"DataObject1" : "DO1", "processVariable1" : "PV1"}'
+-----
+
 === Simple Task
 
 . Start business process instance with human task:
@@ -212,6 +223,14 @@ $ curl -H "Authorization: Bearer $TKN" -X GET -H 'Accept:application/json' $kies
 $ curl -v -X POST -H 'Content-type:application/json' \
         -H "Authorization: Bearer $TKN" \
         $kieserver_hostname/rest/server/containers/bpmn-examples/processes/SimpleTask/instances
+-----
+
+. View list of tasks as a Business Administrator
++
+-----
+$ curl -v -X GET -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/queries/tasks/instances/admins
 -----
 
 . Grab a JWT specific to the _eve_ user and query for human tasks:
