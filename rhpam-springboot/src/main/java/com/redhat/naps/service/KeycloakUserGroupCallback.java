@@ -30,6 +30,8 @@ public class KeycloakUserGroupCallback implements UserGroupCallback {
 
     private SpringSecurityIdentityProvider provider;
 
+    private boolean skipUserCallbackVerification = true;
+
     public KeycloakUserGroupCallback(IdentityProvider x) {
 
         this.provider = (SpringSecurityIdentityProvider)x;
@@ -58,7 +60,9 @@ public class KeycloakUserGroupCallback implements UserGroupCallback {
     @Override
     // When a task is created, verify that userId assigned to task is actually registered in Identity Provider
     public boolean existsUser(String userId) {
-        if (userId.equals("kieserver") || userId.equals("wbadmin") || userId.equals("user") || userId.equals("Administrator"))
+        if(skipUserCallbackVerification)
+            return true;
+        else if (userId.equals("kieserver") || userId.equals("wbadmin") || userId.equals("user") || userId.equals("Administrator"))
             return true;
         else {
             log.warn("existsUser() will not allow the following user to manage a task: "+userId);

@@ -22,9 +22,9 @@
     <narayana.version>5.9.0.Final</narayana.version>
     <fabric8.version>3.5.40</fabric8.version>
     <cxf.version>3.2.14</cxf.version>
+    <version.org.keycloak>9.0.15.redhat-00002</version.org.keycloak>
     <version.mortgages.kjar>0.0.1</version.mortgages.kjar>
     <version.bpmn-examples.kjar>0.0.1</version.bpmn-examples.kjar>
-    <version.org.keycloak>9.0.15.redhat-00002</version.org.keycloak>
   </properties>
 
   <dependencyManagement>

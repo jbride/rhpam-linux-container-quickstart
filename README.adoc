@@ -89,9 +89,9 @@ NOTE:  If underlying linux container system in use in your local environment is 
 $ podman exec -it etc_psql_sso_1 psql sso -c "update REALM set ssl_required='NONE' where id = 'master'"
 -----
 
-.. Log into _master_ realm of RH-SSO at http://localhost:8080 using credentials of:  master / master
+.. Log into _master_ realm of RH-SSO at http://localhost:4080 using credentials of:  master / master
 
-. Log into _kieRealm_ at http://localhost:8080/auth/admin/kieRealm/console using credentials of:  ssoRealmAdmin / pam
+. Log into _kieRealm_ at http://localhost:4080/auth/admin/kieRealm/console using credentials of:  ssoRealmAdmin / pam
 
 . Stop application pod with all linux containers:
 +
@@ -248,6 +248,106 @@ $ curl -v -X GET -H 'Content-type:application/json' \
         -H "Authorization: Bearer $TKN" \
         $kieserver_hostname/rest/server/queries/tasks/instances/pot-owners
 -----
+
+
+=== Dynamic Assignment
+
+. Start business process instance with human task:
++
+-----
+$ curl -v -X POST -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/containers/bpmn-examples/processes/DynamicAssignment/instances \
+        -d '{"ActorId" : "eve", "GroupId" : "talent-acquisition"}'
+-----
+
+. View list of tasks as a Business Administrator
++
+-----
+$ curl -v -X GET -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/queries/tasks/instances/admins
+-----
+
+. Grab taskId of task dynamically assigned to _eve_:
++
+-----
+$ TASKID=$(curl -v -X GET -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/queries/tasks/instances/admins \
+        | jq '."task-summary"[0]."task-id"')
+
+$ echo $TASKID
+-----
+
+. Grab a JWT specific to the _eve_ user and start the human tasks (currently in a Reserved status) :
++
+-----
+TKN=$(curl -X POST "$retrieve_token_url" \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "username=eve" \
+            -d "password=pam" \
+            -d "grant_type=password" \
+            -d "client_id=kie-server" \
+            | sed 's/.*access_token":"//g' | sed 's/".*//g')
+
+$ curl -v -X PUT -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/containers/bpmn-examples/tasks/$TASKID/states/started
+-----
+
+. Complete the human task as _eve_
++
+-----
+$ curl -v -X PUT -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/containers/bpmn-examples/tasks/$TASKID/states/completed
+-----
+
+. Grab a JWT specific to the _tina_ user (with a role of talent-acquisition) and claim the human task (currently in a Ready status) :
++
+-----
+TKN=$(curl -X POST "$retrieve_token_url" \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "username=tina" \
+            -d "password=pam" \
+            -d "grant_type=password" \
+            -d "client_id=kie-server" \
+            | sed 's/.*access_token":"//g' | sed 's/".*//g')
+
+$ curl -v -X GET -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/queries/tasks/instances/pot-owners
+
+. Grab taskId of task dynamically to _Tina's_ role:
++
+-----
+$ TASKID=$(curl -v -X GET -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/queries/tasks/instances/pot-owners \
+        | jq '."task-summary"[0]."task-id"')
+
+$ echo $TASKID
+
+-----
+
+. Execute task lifecycle:
++
+-----
+$ curl -v -X PUT -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/containers/bpmn-examples/tasks/$TASKID/states/claimed
+
+$ curl -v -X PUT -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/containers/bpmn-examples/tasks/$TASKID/states/started
+
+$ curl -v -X PUT -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/containers/bpmn-examples/tasks/$TASKID/states/completed
+-----
+
+
 
 === WIH Exceptions
 
