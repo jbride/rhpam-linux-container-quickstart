@@ -251,8 +251,9 @@ $ curl -v -X GET -H 'Content-type:application/json' \
 
 
 === Dynamic Assignment
+The purpose of this example is to showcase some of the functionality enabled by link:https://github.com/kiegroup/jbpm/blob/main/jbpm-human-task/jbpm-human-task-workitems/src/main/java/org/jbpm/services/task/wih/util/PeopleAssignmentHelper.java[org.jbpm.services.task.wih.util.PeopleAssignmentHelper]
 
-. Start business process instance with human task:
+. As a business administrator, start a business process with user tasks using a payload that specifies the desired user and group assignments of those tasks:
 +
 -----
 $ curl -v -X POST -H 'Content-type:application/json' \
@@ -261,7 +262,7 @@ $ curl -v -X POST -H 'Content-type:application/json' \
         -d '{"ActorId" : "eve", "GroupId" : "talent-acquisition"}'
 -----
 
-. View list of tasks as a Business Administrator
+. View list of tasks as a Business Administrator:
 +
 -----
 $ curl -v -X GET -H 'Content-type:application/json' \
@@ -269,7 +270,7 @@ $ curl -v -X GET -H 'Content-type:application/json' \
         $kieserver_hostname/rest/server/queries/tasks/instances/admins
 -----
 
-. Grab taskId of task dynamically assigned to _eve_:
+. Grab the taskId of the task dynamically assigned to _eve_:
 +
 -----
 $ TASKID=$(curl -v -X GET -H 'Content-type:application/json' \
@@ -280,7 +281,7 @@ $ TASKID=$(curl -v -X GET -H 'Content-type:application/json' \
 $ echo $TASKID
 -----
 
-. Grab a JWT specific to the _eve_ user and start the human tasks (currently in a Reserved status) :
+. Grab a JWT specific to the _eve_ user and start the user task (currently in a Reserved status) :
 +
 -----
 TKN=$(curl -X POST "$retrieve_token_url" \
@@ -296,7 +297,7 @@ $ curl -v -X PUT -H 'Content-type:application/json' \
         $kieserver_hostname/rest/server/containers/bpmn-examples/tasks/$TASKID/states/started
 -----
 
-. Complete the human task as _eve_
+. Complete the human task as the _eve_ user:
 +
 -----
 $ curl -v -X PUT -H 'Content-type:application/json' \
@@ -304,7 +305,7 @@ $ curl -v -X PUT -H 'Content-type:application/json' \
         $kieserver_hostname/rest/server/containers/bpmn-examples/tasks/$TASKID/states/completed
 -----
 
-. Grab a JWT specific to the _tina_ user (with a role of talent-acquisition) and claim the human task (currently in a Ready status) :
+. Grab a JWT specific to the _tina_ user (with a role of talent-acquisition) and claim the next user task (currently in a Ready status) defined in the business process:
 +
 -----
 TKN=$(curl -X POST "$retrieve_token_url" \
@@ -314,12 +315,18 @@ TKN=$(curl -X POST "$retrieve_token_url" \
             -d "grant_type=password" \
             -d "client_id=kie-server" \
             | sed 's/.*access_token":"//g' | sed 's/".*//g')
+-----
 
+
+. View the tasks that have been dynamically assigned to the group that the _tina_ user belongs to:
++
+-----
 $ curl -v -X GET -H 'Content-type:application/json' \
         -H "Authorization: Bearer $TKN" \
         $kieserver_hostname/rest/server/queries/tasks/instances/pot-owners
+-----
 
-. Grab taskId of task dynamically to _Tina's_ role:
+. Grab the taskId of the task:
 +
 -----
 $ TASKID=$(curl -v -X GET -H 'Content-type:application/json' \
