@@ -253,6 +253,8 @@ $ curl -v -X GET -H 'Content-type:application/json' \
 === Dynamic Assignment
 The purpose of this example is to showcase some of the functionality enabled by link:https://github.com/kiegroup/jbpm/blob/main/jbpm-human-task/jbpm-human-task-workitems/src/main/java/org/jbpm/services/task/wih/util/PeopleAssignmentHelper.java[org.jbpm.services.task.wih.util.PeopleAssignmentHelper]
 
+NOTE:  This known link:https://issues.redhat.com/browse/KOGITO-6283[issue] with the authoring tooling affects this example.
+
 . As a business administrator, start a business process with user tasks using a payload that specifies the desired user and group assignments of those tasks:
 +
 -----
@@ -354,6 +356,26 @@ $ curl -v -X PUT -H 'Content-type:application/json' \
         $kieserver_hostname/rest/server/containers/bpmn-examples/tasks/$TASKID/states/completed
 -----
 
+=== Process Debugger
+
+. Start RH-PAM in remote debug mode (where JVM suspends and listens on port 5005):
++
+-----
+$  export JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=y"
+$ java $JAVA_OPTS -Dorg.kie.server.repo=../etc/rhpam/runtime_configs               -jar target/rhpam-springboot-0.0.1.jar
+-----
+
+. As a business administrator, start an instance of _TaskBreakPoint_ process:
++
+-----
+$ curl -v -X POST -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/containers/bpmn-examples/processes/TaskBreakPoint/instances
+-----
+
+. Inspect the ProcessContext at the breakpoint:
++
+image::etc/doc_images/TaskBreakPoint_Debug.png[]
 
 
 === WIH Exceptions
