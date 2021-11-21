@@ -357,6 +357,13 @@ $ curl -v -X PUT -H 'Content-type:application/json' \
 -----
 
 === Process Debugger
+In an ideal world, it would be nice if there was a visual tool to place a breakpoint anywhere on a BPMN diagram so as to debug a corresponding process instance.
+
+Such a tool does not exist.  However, it's not very difficult to come close to that objective using an easy approach illustrated here.
+
+This quickstart introduces a simple class called:  _com.myspace.handling_wih_exception.util.ProcessContextDebugger_ .
+
+Thas class is invoked in the _onEntry_ action of a service task and passed to it the KIE _org.kie.api.runtime.process.ProcessContext_.  A breakpoint is placed on a function of this class. 
 
 . Start RH-PAM in remote debug mode (where JVM suspends and listens on port 5005):
 +
@@ -364,6 +371,8 @@ $ curl -v -X PUT -H 'Content-type:application/json' \
 $  export JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=y"
 $ java $JAVA_OPTS -Dorg.kie.server.repo=../etc/rhpam/runtime_configs               -jar target/rhpam-springboot-0.0.1.jar
 -----
+
+. Using your vscode IDE, configure it to start a debugger session that invokes the remote RH-PAM springboot app on port 5005.
 
 . As a business administrator, start an instance of _TaskBreakPoint_ process:
 +
