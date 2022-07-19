@@ -89,9 +89,9 @@ NOTE:  If underlying linux container system in use in your local environment is 
 $ podman exec -it etc_psql_sso_1 psql sso -c "update REALM set ssl_required='NONE' where id = 'master'"
 -----
 
-.. Log into _master_ realm of RH-SSO at http://localhost:4080 using credentials of:  master / master
+.. Log into _master_ realm of RH-SSO at http://sso.local:4080 using credentials of:  admin / admin
 
-. Log into _kieRealm_ at http://localhost:4080/auth/admin/kieRealm/console using credentials of:  ssoRealmAdmin / pam
+. Log into _kieRealm_ at http://sso.local:4080/admin/kieRealm/console using credentials of:  ssoRealmAdmin / pam
 
 . Stop application pod with all linux containers:
 +
@@ -99,15 +99,14 @@ $ podman exec -it etc_psql_sso_1 psql sso -c "update REALM set ssl_required='NON
 $ docker-compose -f etc/docker-compose.yaml down
 -----
 
-
 == Test
 
 . Set the following environment variables with values similar to the following:
 +
 -----
-rhsso_hostname=localhost:4080
+rhsso_hostname=sso.local:4080
 kieserver_hostname=localhost:9080
-retrieve_token_url="http://$rhsso_hostname/auth/realms/kieRealm/protocol/openid-connect/token"
+retrieve_token_url="http://$rhsso_hostname/realms/kieRealm/protocol/openid-connect/token"
 -----
 
 
@@ -213,6 +212,17 @@ $ curl -v -X POST -H 'Content-type:application/json' \
         -H "Authorization: Bearer $TKN" \
         $kieserver_hostname/rest/server/containers/bpmn-examples/processes/SimpleDataObject/instances \
         -d '{"DataObject1" : "DO1", "processVariable1" : "PV1"}'
+-----
+
+=== Concurrency Test
+
+. Start business process instance that sleeps for a given amount of time:
++
+-----
+$ curl -v -X POST -H 'Content-type:application/json' \
+        -H "Authorization: Bearer $TKN" \
+        $kieserver_hostname/rest/server/containers/bpmn-examples/processes/concurrency_test/instances \
+        -d '{"sleep_duration_millis" : "10000"}'
 -----
 
 === Simple Task

@@ -3,6 +3,7 @@ version: '3.7'
 services:
 
   psql_sso:
+    container_name: psql_sso
     image: registry.redhat.io/rhel8/postgresql-12:1-72.1626836556
     restart: always
     ports:
@@ -22,36 +23,38 @@ services:
       - sso
 
   sso:
-    image: registry.redhat.io/rh-sso-7/sso74-openshift-rhel8:7.4-36
+    container_name: sso
+
+    # https://github.com/redhat-na-ssa/keycloak_customizations_quickstart/blob/main/etc/sso/Dockerfile
+    image: quay.io/jbride/keycloak:18.0.0-5-psql
+
     restart: always
     ports:
-      - "4443:8443"
-      - "4080:8080"
+      - "4443:4443"
+      - "4080:4080"
+    command: [start-dev]
     environment:
-      SSO_POSTGRESQL_SERVICE_HOST: psql_sso
-      SSO_POSTGRESQL_SERVICE_PORT: 4432
-      DB_SERVICE_PREFIX_MAPPING: "sso-postgresql=DB"
-      DB_JNDI: "java:jboss/datasources/KeycloakDS"
-      DB_USERNAME: sso
-      DB_PASSWORD: sso
-      DB_DATABASE: sso
-      TX_DATABASE_PREFIX_MAPPING: "sso-postgresql=DB"
-      DB_MIN_POOL_SIZE: 5
-      DB_MAX_POOL_SIZE: 10
-      SSO_ADMIN_USERNAME: master
-      SSO_ADMIN_PASSWORD: master
+
+      # Add the following entry in your /etc/hosts:  127.0.0.1  sso.local
+      KC_HOSTNAME: sso.local
+
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB_URL: 'jdbc:postgresql://psql_sso:4432/sso'
+      KC_DB_USERNAME: sso
+      KC_DB_PASSWORD: sso
       JAVA_OPTS_APPEND: -Dkeycloak.migration.strategy=IGNORE_EXISTING -Dkeycloak.import=/opt/kie-realm.json
+      KC_HTTP_PORT: 4080
+      KC_HTTPS_PORT: 4443
     volumes:
-      - type: bind
-        source: ./sso/kie-realm.json
-        target: /opt/kie-realm.json
+      - ./sso/kie-realm.json:/opt/kie-realm.json:bind
     depends_on:
       - psql_sso
     networks:
       - sso
 
-
   psql_rhpam:
+    container_name: psql-rhpam
     image: registry.redhat.io/rhel8/postgresql-12:1-72.1626836556
     restart: always
     ports:
@@ -75,6 +78,18 @@ services:
         target: /opt/app-root/src/postgresql-start/create_rhpam_database.sh
     networks:
       - default
+
+#  https://docs.kogito.kie.org/latest/html_single/#_postgresql_persistence_with_the_kogito_data_index_service
+#  kogito_data_index
+#    image: quay.io/kiegroup/kogito-data-index-ephemeral:1.15.0
+#    image: quay.io/kiegroup/kogito-data-index-postgresql:1.15.0
+#    restart: always
+#    environment:
+#      QUARKUS_DATASOURCE_DB-KIND: postgresql
+#      QUARKUS_DATASOURCE_USERNAME: rhpam
+#      QUARKUS_DATASOURCE_PASSWORD: rhpam
+#      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://psql_rhpam:6432/rhpam
+#      QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION: update
 
 #  rhpam_springboot:
 #    auto_up: false

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" xmlns:xsi="xsi" id="__DOh8OmREDqNtsbR3Dnhiw" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd http://www.omg.org/spec/DD/20100524/DC DC.xsd http://www.omg.org/spec/DD/20100524/DI DI.xsd " exporter="jBPM Process Modeler" exporterVersion="2.0" targetNamespace="http://www.omg.org/bpmn20">
+  <bpmn2:itemDefinition id="_sleep_duration_millisItem" structureRef="String"/>
+  <bpmn2:collaboration id="_5FE798ED-72D0-4B9E-8D5F-71D20668E4C1" name="Default Collaboration">
+    <bpmn2:participant id="_B01F0E8B-0704-436E-8CDC-D587774A3E87" name="Pool Participant" processRef="concurrency_test"/>
+  </bpmn2:collaboration>
+  <bpmn2:process id="concurrency_test" drools:packageName="com.example" drools:version="1.0" drools:adHoc="false" name="concurrency_test" isExecutable="true" processType="Public">
+    <bpmn2:property id="sleep_duration_millis" itemSubjectRef="_sleep_duration_millisItem" name="sleep_duration_millis"/>
+    <bpmn2:sequenceFlow id="_5B0B7E62-749C-47A8-87C2-7348D8DE1420" sourceRef="_6461D991-EB58-47F0-8150-74A249EC0728" targetRef="_CF2149A2-3247-4463-993B-F2559852219C">
+      <bpmn2:extensionElements>
+        <drools:metaData name="isAutoConnection.target">
+          <drools:metaValue><![CDATA[true]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="_D4A44247-BD30-4344-AD98-DDA0B985FE50" sourceRef="_5BE0D9FC-1D26-4219-B00E-EB34849126B8" targetRef="_6461D991-EB58-47F0-8150-74A249EC0728">
+      <bpmn2:extensionElements>
+        <drools:metaData name="isAutoConnection.target">
+          <drools:metaValue><![CDATA[true]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+    </bpmn2:sequenceFlow>
+    <bpmn2:endEvent id="_CF2149A2-3247-4463-993B-F2559852219C">
+      <bpmn2:incoming>_5B0B7E62-749C-47A8-87C2-7348D8DE1420</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:scriptTask id="_6461D991-EB58-47F0-8150-74A249EC0728" name="Task" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <drools:metaData name="elementname">
+          <drools:metaValue><![CDATA[Task]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>_D4A44247-BD30-4344-AD98-DDA0B985FE50</bpmn2:incoming>
+      <bpmn2:outgoing>_5B0B7E62-749C-47A8-87C2-7348D8DE1420</bpmn2:outgoing>
+      <bpmn2:script>System.out.println("About to sleep for "+kcontext.getVariable("sleep_duration_millis"));
+
+
+long sleep = Long.parseLong(((String)kcontext.getVariable("sleep_duration_millis")));
+Thread.sleep(sleep);
+
+System.out.println("awake again");</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:startEvent id="_5BE0D9FC-1D26-4219-B00E-EB34849126B8">
+      <bpmn2:outgoing>_D4A44247-BD30-4344-AD98-DDA0B985FE50</bpmn2:outgoing>
+    </bpmn2:startEvent>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="concurrency_test">
+      <bpmndi:BPMNShape id="shape__5BE0D9FC-1D26-4219-B00E-EB34849126B8" bpmnElement="_5BE0D9FC-1D26-4219-B00E-EB34849126B8">
+        <dc:Bounds height="56" width="56" x="554" y="417"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape__6461D991-EB58-47F0-8150-74A249EC0728" bpmnElement="_6461D991-EB58-47F0-8150-74A249EC0728">
+        <dc:Bounds height="102" width="154" x="749" y="399"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape__CF2149A2-3247-4463-993B-F2559852219C" bpmnElement="_CF2149A2-3247-4463-993B-F2559852219C">
+        <dc:Bounds height="56" width="56" x="1032" y="417"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge_shape__5BE0D9FC-1D26-4219-B00E-EB34849126B8_to_shape__6461D991-EB58-47F0-8150-74A249EC0728" bpmnElement="_D4A44247-BD30-4344-AD98-DDA0B985FE50">
+        <di:waypoint x="582" y="445"/>
+        <di:waypoint x="777" y="399"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_shape__6461D991-EB58-47F0-8150-74A249EC0728_to_shape__CF2149A2-3247-4463-993B-F2559852219C" bpmnElement="_5B0B7E62-749C-47A8-87C2-7348D8DE1420">
+        <di:waypoint x="826" y="450"/>
+        <di:waypoint x="1109" y="417"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmn2:relationship type="BPSimData">
+    <bpmn2:extensionElements>
+      <bpsim:BPSimData>
+        <bpsim:Scenario id="default" name="Simulationscenario">
+          <bpsim:ScenarioParameters/>
+          <bpsim:ElementParameters elementRef="_5BE0D9FC-1D26-4219-B00E-EB34849126B8">
+            <bpsim:TimeParameters>
+              <bpsim:ProcessingTime>
+                <bpsim:NormalDistribution mean="0" standardDeviation="0"/>
+              </bpsim:ProcessingTime>
+            </bpsim:TimeParameters>
+          </bpsim:ElementParameters>
+          <bpsim:ElementParameters elementRef="_6461D991-EB58-47F0-8150-74A249EC0728">
+            <bpsim:TimeParameters>
+              <bpsim:ProcessingTime>
+                <bpsim:NormalDistribution mean="0" standardDeviation="0"/>
+              </bpsim:ProcessingTime>
+            </bpsim:TimeParameters>
+            <bpsim:ResourceParameters>
+              <bpsim:Availability>
+                <bpsim:FloatingParameter value="0"/>
+              </bpsim:Availability>
+              <bpsim:Quantity>
+                <bpsim:FloatingParameter value="0"/>
+              </bpsim:Quantity>
+            </bpsim:ResourceParameters>
+            <bpsim:CostParameters>
+              <bpsim:UnitCost>
+                <bpsim:FloatingParameter value="0"/>
+              </bpsim:UnitCost>
+            </bpsim:CostParameters>
+          </bpsim:ElementParameters>
+        </bpsim:Scenario>
+      </bpsim:BPSimData>
+    </bpmn2:extensionElements>
+    <bpmn2:source>__DOh8OmREDqNtsbR3Dnhiw</bpmn2:source>
+    <bpmn2:target>__DOh8OmREDqNtsbR3Dnhiw</bpmn2:target>
+  </bpmn2:relationship>
+</bpmn2:definitions>
